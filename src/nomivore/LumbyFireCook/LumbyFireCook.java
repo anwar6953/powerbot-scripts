@@ -77,20 +77,22 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                         return ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE).visible();
                     }
                 },500, 5);
-                if (ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE).visible()) ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE).interact("Cook all");
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return temp != foodCooked;
-                    }
-                }, 500, 5);
-                if (temp != foodCooked) {
+                if (ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE).visible()) {
+                    ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE).interact("Cook all");
                     Condition.wait(new Callable<Boolean>() {
                         @Override
                         public Boolean call() throws Exception {
-                            return ctx.inventory.select().id(foodToCook).isEmpty() || ctx.chat.canContinue() || ctx.objects.select(3).id(ID.FIRE).isEmpty();
+                            return temp != foodCooked;
                         }
-                    }, 1000, 30);
+                    }, 500, 5);
+                    if (temp != foodCooked) {
+                        Condition.wait(new Callable<Boolean>() {
+                            @Override
+                            public Boolean call() throws Exception {
+                                return ctx.inventory.select().id(foodToCook).isEmpty() || ctx.chat.canContinue() || ctx.objects.select(3).id(ID.FIRE).isEmpty();
+                            }
+                        }, 1000, 30);
+                    }
                 }
                 break;
             case WALK:
@@ -140,6 +142,7 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
         }
         if (ctx.inventory.select().id(foodToCook).count() > 0 &&
                 ctx.players.local().animation() == -1 &&
+                !ctx.players.local().inMotion() &&
                 ctx.inventory.select().id(toolID).count() > 0) {
             return State.ACTION;
         }
