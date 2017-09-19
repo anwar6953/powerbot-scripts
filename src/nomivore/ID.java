@@ -1,6 +1,6 @@
-package nomivore.SarimSeagulls;
+package nomivore;
 
-public class IDN {
+public class ID {
     // Monsters
     public static final int
             RAT_GIANT = 3313;
@@ -20,13 +20,18 @@ public class IDN {
             POT_FLOUR = 1933,
             JUG_FULL = 1937,
             PIE_DISH = 2313,
-            DOUGH_PASTRY = 1953;
+            DOUGH_PASTRY = 1953,
+            BAR_GOLD = 2357,
+            GEM_SAPPHIRE_CUT = 1607;
 
     // TOOLS
     public static final int
             FISHING_ROD_FLY = 309,
             FISHING_NET = 303,
-            TINDERBOX = 590;
+            TINDERBOX = 590,
+            MOULD_NECKLACE = 1597,
+            MOULD_AMULET = 1595,
+            MOULD_RING = 1592;
 
     //COOKED FOOD
     public static final int
@@ -52,7 +57,8 @@ public class IDN {
 
     //OBJECTS
     public static final int
-            FIRE = 26185;
+            FIRE = 26185,
+            FURNACE = 24009;
 
     //WIDGETS
     public static final int MAGIC_WIDGET = 218,
@@ -63,6 +69,12 @@ public class IDN {
             SPELL_SPIN_FLAX = 138,
             WIDGET_CHATBOX = 162,
             WIDGET_MAKE = 547,
-            SPELL_HIGH_ALCH = 35;
+            SPELL_HIGH_ALCH = 35,
+            WIDGET_FURNACE_CRAFT = 446,
+            CRAFT_GOLD_AMULET = 34,
+            CRAFT_GOLD_NECKLACE = 21,
+            CRAFT_SAPPHIRE_NECKLACE = 22,
+            WIDGET_UI = 160,
+            WIDGET_RUN = 24;
 
 }

@@ -1,7 +1,7 @@
 package nomivore.SarimSeagulls;
 
 
-//import nomivore.IDN;
+import nomivore.ID;
 import org.powerbot.script.*;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.*;
@@ -12,8 +12,8 @@ import java.util.concurrent.Callable;
 @Script.Manifest(name = "SarimSeagulls", properties = "author=nomivore; topic=1338000; client=4;", description = "Attacks seagulls, banks/buries bones")
 public class SarimSeagulls extends PollingScript<ClientContext> implements PaintListener, MessageListener {
 
-    private final int[] npcs = IDN.SEAGULL;
-    private final int loot = IDN.BONES;
+    private final int[] npcs = ID.SEAGULL;
+    private final int loot = ID.BONES;
     private final int depositBoxID = 26254;
     private final Tile destTile = new Tile(3028,3235);
     private final Tile bankTile = new Tile(3045,3235);
@@ -111,7 +111,7 @@ public class SarimSeagulls extends PollingScript<ClientContext> implements Paint
                 }
                 break;
             case BURY:
-                ctx.inventory.select().id(IDN.BONES).poll().interact("Bury");
+                ctx.inventory.select().id(ID.BONES).poll().interact("Bury");
                 Condition.sleep(1000);
                 break;
             case WAIT:
@@ -149,7 +149,7 @@ public class SarimSeagulls extends PollingScript<ClientContext> implements Paint
                 return State.BANK;
             }
         } else if (action == 2) {
-            if (ctx.inventory.select().id(IDN.BONES).count() >= 1) {
+            if (ctx.inventory.select().id(ID.BONES).count() >= 1) {
                 state = "Burying";
                 return State.BURY;
             }
