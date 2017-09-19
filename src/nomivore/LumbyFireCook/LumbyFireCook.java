@@ -51,6 +51,7 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
         }
         switch (getState()) {
             case FIRE:
+                if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
                 lit = false;
                 GroundItem logs = ctx.groundItems.select(7).id(ID.LOGS_NORMAL).nearest().poll();
                 logs.interact("Light");
@@ -63,6 +64,7 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                 break;
             case ACTION:
 //                Condition.sleep(nap);
+                if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
                 final int temp = foodCooked;
                 Item food = ctx.inventory.select().id(foodToCook).poll();
                 GameObject fire = ctx.objects.select().id(ID.FIRE).nearest().poll();
