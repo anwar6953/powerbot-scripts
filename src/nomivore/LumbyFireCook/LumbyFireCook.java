@@ -3,6 +3,7 @@ package nomivore.LumbyFireCook;
 import nomivore.ID;
 import org.powerbot.script.*;
 import org.powerbot.script.rt4.*;
+import org.powerbot.script.rt4.Component;
 import org.powerbot.script.rt4.ClientContext;
 
 import java.awt.*;
@@ -11,22 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Script.Manifest(
-        name = "LumbyFireCook", properties = "author=nomviore; topic=1338085; client=4;",
+        name = "LumbyFireCook", properties = "author=nomivore; topic=1338085; client=4;",
         description = "Lights fires and cooks at lumby bank")
 public class LumbyFireCook extends PollingScript<ClientContext> implements PaintListener, MessageListener {
 
     private final Tile destTile = new Tile(3206,3224,2);
     private final Tile bankTile = new Tile(3208,3220,2);
 
-    private int[] toolID = {ID.TINDERBOX};
-//    private int[] foodIDs = {ID.RAW_SHRIMP};
+    private int toolID = ID.TINDERBOX;
     public static List<Integer> foodIDs = new ArrayList();
+    private Component cookUI = ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE);
     private int foodToCook;
     private int foodCooked;
     private int level;
     private int skill = Constants.SKILLS_COOKING;
     private int startExp;
-    private String interact = "Use";
+//    private String interact = "Use";
     private boolean lit = false;
 
     @Override
@@ -69,16 +70,16 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                 Item food = ctx.inventory.select().id(foodToCook).poll();
                 GameObject fire = ctx.objects.select().id(ID.FIRE).nearest().poll();
                 food.interact("Use");
-                fire.interact(interact);
+                fire.interact("Use", "Fire");
                 Condition.sleep(1000);
                 Condition.wait(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
-                        return ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE).visible();
+                        return cookUI.visible();
                     }
                 },500, 5);
-                if (ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE).visible()) {
-                    ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE).interact("Cook all");
+                if (cookUI.visible()) {
+                    cookUI.interact("Cook all");
                     Condition.wait(new Callable<Boolean>() {
                         @Override
                         public Boolean call() throws Exception {
@@ -91,7 +92,7 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                             public Boolean call() throws Exception {
                                 return ctx.inventory.select().id(foodToCook).isEmpty() || ctx.chat.canContinue() || ctx.objects.select(3).id(ID.FIRE).isEmpty();
                             }
-                        }, 1000, 30);
+                        }, 1000, 65);
                     }
                 }
                 break;
@@ -105,7 +106,6 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                 } else {
                     if (ctx.bank.opened()) {
                         depositInventory();
-                        ctx.bank.withdraw(toolID[0],1);
                         for (int selectResource : foodIDs) {
                             if (ctx.bank.select().id(selectResource).count(true) > 0) {
                                 foodToCook = selectResource;
@@ -113,6 +113,7 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                             }
                         }
                         if (ctx.bank.select().id(foodToCook).count(true) == 0) ctx.controller.stop();
+                        ctx.bank.withdraw(toolID,1);
                         ctx.bank.withdraw(foodToCook, Bank.Amount.ALL);
                         closeBank();
                     } else {
@@ -130,20 +131,23 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
     }
 
     private State getState() {
-        if (ctx.inventory.select().id(foodToCook).count() > 0 && ctx.inventory.select().id(toolID).count() > 0 && destTile.distanceTo(ctx.players.local()) > 3) {
+        if (!ctx.inventory.select().id(foodToCook).isEmpty() &&
+                !ctx.inventory.select().id(toolID).isEmpty() &&
+                destTile.distanceTo(ctx.players.local()) > 3) {
             return State.WALK;
         }
-        if (ctx.inventory.select().id(foodToCook).count() == 0 || ctx.inventory.select().id(toolID).isEmpty()) {
+        if (ctx.inventory.select().id(foodToCook).isEmpty() ||
+                ctx.inventory.select().id(toolID).isEmpty()) {
             return State.BANK;
         }
-        if (ctx.objects.select(7).id(ID.FIRE).isEmpty() &&
-                ctx.inventory.select().id(toolID).count() > 0) {
+        if (ctx.objects.select(2).id(ID.FIRE).isEmpty() &&
+                !ctx.inventory.select().id(toolID).isEmpty()) {
             return State.FIRE;
         }
-        if (ctx.inventory.select().id(foodToCook).count() > 0 &&
+        if (!ctx.inventory.select().id(foodToCook).isEmpty() &&
                 ctx.players.local().animation() == -1 &&
                 !ctx.players.local().inMotion() &&
-                ctx.inventory.select().id(toolID).count() > 0) {
+                !ctx.inventory.select().id(toolID).isEmpty()) {
             return State.ACTION;
         }
         return State.WAIT;
