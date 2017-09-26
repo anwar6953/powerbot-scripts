@@ -24,7 +24,11 @@ public class ID {
     PIZZA_INCOMPLETE = 2285,
     DOUGH_PASTRY = 1953,
     BAR_GOLD = 2357,
-    GEM_SAPPHIRE_CUT = 1607;
+    GEM_SAPPHIRE_CUT = 1607,
+    GEM_EMERALD_CUT = 1605,
+    GEM_RUBY_CUT = 1603,
+    GEM_DIAMOND_CUT = 1601,
+    GEM_DRAGONSTONE_CUT = 1615;
 
     public static final int
     LOGS_NORMAL = 1511,
@@ -82,8 +86,11 @@ public class ID {
             WIDGET_MAKE = 547,
             SPELL_HIGH_ALCH = 35,
             WIDGET_FURNACE_CRAFT = 446,
-            CRAFT_GOLD_AMULET = 34,
-            CRAFT_GOLD_NECKLACE = 21,
+            CRAFT_RING_BASE = 7,
+
+    CRAFT_NECKLACE_BASE = 21,
+            CRAFT_AMULET_BASE = 34,
+            CRAFT_BRACELET_BASE = 47,
             CRAFT_SAPPHIRE_NECKLACE = 22,
             WIDGET_UI = 160,
             WIDGET_RUN = 24,

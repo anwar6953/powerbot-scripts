@@ -25,7 +25,7 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
     private treeObject normal = new treeObject("Tree", ID.LOGS_NORMAL,new Tile(2758, 3460), 1, ctx.widgets.component(306, 7));
     private treeObject oak = new treeObject("Oak", ID.LOGS_OAK,new Tile(2769, 3463), 15, ctx.widgets.component(305, 7));
     private treeObject willow = new treeObject("Willow", ID.LOGS_WILLOW,new Tile(2711, 3510), 30, ctx.widgets.component(305, 7));
-    private treeObject maple = new treeObject("Maple tree", ID.LOGS_MAPLE,new Tile(2758, 3460), 45, ctx.widgets.component(305, 7));
+    private treeObject maple = new treeObject("Maple tree", ID.LOGS_MAPLE,new Tile(2731, 3500), 45, ctx.widgets.component(305, 7));
 
     private List<treeObject> treeList = new ArrayList();
 
