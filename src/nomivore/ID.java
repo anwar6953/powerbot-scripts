@@ -18,7 +18,8 @@ public class ID {
     CHEESE = 1985,
     TOMATO = 1982,
     POT_FLOUR = 1933,
-    JUG_FULL = 1937,
+    JUG_WATER = 1937,
+    GRAPES = 1987,
     PIE_DISH = 2313,
     DOUGH_PIZZA = 2283,
     PIZZA_INCOMPLETE = 2285,
@@ -36,16 +37,27 @@ public class ID {
     LOGS_WILLOW = 1519,
     LOGS_MAPLE = 1517;
 
+    // Smithing ids
+    public static final int
+            WIDGET_SMITH = 312,
+            SMITH_DART_WIDGET = 23,
+            BAR_IRON = 2351,
+            BAR_STEEL = 2353,
+            BAR_MITHRIL = 2359,
+            BAR_ADAMANT = 2361,
+            lll = 11;
 
     // TOOLS
     public static final int
-            FISHING_ROD_FLY = 309,
-            FISHING_NET = 303,
-            TINDERBOX = 590,
-            MOULD_NECKLACE = 1597,
-            MOULD_AMULET = 1595,
-            MOULD_RING = 1592,
-            KNIFE = 946;
+    FISHING_ROD_FLY = 309,
+    FISHING_NET = 303,
+    TINDERBOX = 590,
+    HAMMER = 2347,
+    MOULD_NECKLACE = 1597,
+    MOULD_AMULET = 1595,
+    MOULD_RING = 1592,
+    MOULD_BRACELET = 11065,
+    KNIFE = 946;
 
     //COOKED FOOD
     public static final int

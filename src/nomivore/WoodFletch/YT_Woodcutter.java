@@ -1,5 +1,6 @@
 package nomivore.WoodFletch;
 
+import nomivore.Functions;
 import nomivore.ID;
 
 import org.powerbot.script.Tile;
@@ -19,7 +20,7 @@ import java.util.concurrent.Callable;
         name = "SeerCutFletch", properties = "author=nomivore; topic=1338232; client=4;",
         description = "Cut wood fletch headless arrows at Seer's Village")
 public class YT_Woodcutter extends PollingScript<ClientContext> implements PaintListener, MessageListener {
-
+    private Functions f = new Functions(ctx);
     private Tile destTile;
 
     private treeObject normal = new treeObject("Tree", ID.LOGS_NORMAL,new Tile(2758, 3460), 1, ctx.widgets.component(306, 7));
@@ -91,7 +92,7 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
                         }, 250, 5);
                     }
                     if (fletchShaft.visible()) {
-                        fletchShaft.interact("Make X");
+                        f.makeXall();
                         Condition.wait(new Callable<Boolean>() {
                             @Override
                             public Boolean call() throws Exception {

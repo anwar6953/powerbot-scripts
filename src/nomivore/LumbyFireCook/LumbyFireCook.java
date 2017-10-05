@@ -1,5 +1,6 @@
 package nomivore.LumbyFireCook;
 
+import nomivore.Functions;
 import nomivore.ID;
 import org.powerbot.script.*;
 import org.powerbot.script.rt4.*;
@@ -16,6 +17,7 @@ import java.util.List;
         description = "Lights fires and cooks at lumby bank")
 public class LumbyFireCook extends PollingScript<ClientContext> implements PaintListener, MessageListener {
 
+    private Functions f = new Functions(ctx);
     private final Tile destTile = new Tile(3206,3224,2);
     private final Tile bankTile = new Tile(3208,3220,2);
 
@@ -105,7 +107,7 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                     if (!ctx.players.local().inMotion()) ctx.movement.step(bankTile);
                 } else {
                     if (ctx.bank.opened()) {
-                        depositInventory();
+                        f.depositInventory();
                         for (int selectResource : foodIDs) {
                             if (ctx.bank.select().id(selectResource).count(true) > 0) {
                                 foodToCook = selectResource;
@@ -115,9 +117,9 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                         if (ctx.bank.select().id(foodToCook).count(true) == 0) ctx.controller.stop();
                         ctx.bank.withdraw(toolID,1);
                         ctx.bank.withdraw(foodToCook, Bank.Amount.ALL);
-                        closeBank();
+                        f.closeBank();
                     } else {
-                        openNearbyBank();
+                        f.openNearbyBank();
                     }
                 }
                 break;
@@ -186,45 +188,5 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
         AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
         g.setComposite(alphaComposite);
         g.fillRect(5, 100, 200, 100);
-    }
-
-    public void openNearbyBank() {
-        if (ctx.bank.inViewport()) {
-            if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
-            if (ctx.bank.open()) {
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return ctx.bank.opened();
-                    }
-                }, 250, 10);
-            }
-        } else {
-            ctx.camera.turnTo(ctx.bank.nearest());
-        }
-    }
-
-    public void depositInventory() {
-        if (ctx.bank.depositInventory()) {
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return ctx.inventory.select().count() == 0;
-                }
-            });
-        }
-    }
-
-    public void closeBank() {
-        if (ctx.bank.opened()) {
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-//          ctx.bank.close();
-                    ctx.input.send("{VK_ESCAPE}");
-                    return !ctx.bank.opened();
-                }
-            });
-        }
     }
 }
