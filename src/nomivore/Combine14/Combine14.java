@@ -16,7 +16,7 @@ import java.util.concurrent.Callable;
 
 import static java.lang.Math.min;
 @Script.Manifest(
-        name = "Combiner", properties = "author=nomivore; topic=1338568; client=4;",
+        name = "Comcubiner", properties = "author=nomivore; topic=1338568; client=4;",
         description = "Combines items")
 public class Combine14 extends PollingScript<ClientContext> implements PaintListener, MessageListener {
 
