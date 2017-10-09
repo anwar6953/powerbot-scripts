@@ -8,6 +8,7 @@ import org.powerbot.script.rt4.ClientContext;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.*;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.awt.*;

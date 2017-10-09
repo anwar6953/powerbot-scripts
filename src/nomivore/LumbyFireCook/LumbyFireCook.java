@@ -107,7 +107,7 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                     if (!ctx.players.local().inMotion()) ctx.movement.step(bankTile);
                 } else {
                     if (ctx.bank.opened()) {
-                        f.depositInventory();
+                        ctx.bank.depositAllExcept(toolID);
                         for (int selectResource : foodIDs) {
                             if (ctx.bank.select().id(selectResource).count(true) > 0) {
                                 foodToCook = selectResource;

@@ -41,6 +41,7 @@ public class ID {
     public static final int
             WIDGET_SMITH = 312,
             SMITH_DART_WIDGET = 23,
+            BAR_BRONZE = 2349,
             BAR_IRON = 2351,
             BAR_STEEL = 2353,
             BAR_MITHRIL = 2359,
