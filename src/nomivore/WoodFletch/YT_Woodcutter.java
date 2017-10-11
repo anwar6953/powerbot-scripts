@@ -3,8 +3,12 @@ package nomivore.WoodFletch;
 import nomivore.Functions;
 import nomivore.ID;
 
+import CustomAPI.Bank;
+import CustomAPI.ClientContext;
+import CustomAPI.ClientContext.*;
+import CustomAPI.PollingScript;
+
 import org.powerbot.script.Tile;
-import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.*;
 import org.powerbot.script.*;
 import org.powerbot.script.rt4.Component;
@@ -30,7 +34,7 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
 
     private List<treeObject> treeList = new ArrayList();
 
-    private int[] logIDs = {ID.LOGS_NORMAL, ID.LOGS_OAK, ID.LOGS_WILLOW};
+    private int[] logIDs = {ID.LOGS_NORMAL, ID.LOGS_OAK, ID.LOGS_WILLOW, ID.LOGS_MAPLE};
     private int logID;
     private String treeName;
     private Component fletchShaft;
@@ -41,9 +45,11 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
     private int level2;
     private int startExp1;
     private int startExp2;
+    private long startTime;
 
     @Override
     public void start() {
+        startTime = getRuntime();
         startExp1 = ctx.skills.experience(skill1);
         startExp2 = ctx.skills.experience(skill2);
         treeList.add(normal);
@@ -69,6 +75,7 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
                 GameObject tree = ctx.objects.select(7).name(treeName).nearest().poll();
 //                ctx.camera.pitch(camAngle);
 //                ctx.camera.angle(camAngle);
+                if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
                 if (tree != null) {
                     if (tree.inViewport()) {
                         tree.interact("Chop", treeName);
@@ -113,14 +120,14 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
                     }
                 }
                 Item[] inven = ctx.inventory.items();
-                for (Item i : inven) {
+                for (int index : ctx.inventory.pattern()) {
                     if (ctx.inventory.selectedItem().valid()) {
                         ctx.inventory.selectedItem().interact("Cancel");
                     }
                     for (int ID : logIDs) {
-                        if (i.id() == ID) {
+                        if (inven[index].id() == ID) {
                             ctx.input.send("{VK_SHIFT down}");
-                            i.click(true);
+                            inven[index].click(true);
                             ctx.input.send("{VK_SHIFT up}");
                         }
                     }
@@ -261,17 +268,14 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
         final Graphics2D g = (Graphics2D) graphics;
         g.setFont(TAHOMA);
 
-        int s = (int)Math.floor(getRuntime()/1000 % 60);
-        int m = (int)Math.floor(getRuntime()/60000 % 60);
-        int h = (int)Math.floor(getRuntime()/3600000);
 
         int exp1 = ctx.skills.experience(skill1) - startExp1;
-        int expHr1 = (int)(exp1*3600000D/getRuntime());
+        int expHr1 = (int)(exp1*3600000D/realRuntime(startTime));
         int exp2 = ctx.skills.experience(skill2) - startExp2;
-        int expHr2 = (int)(exp2*3600000D/getRuntime());
+        int expHr2 = (int)(exp2*3600000D/realRuntime(startTime));
 
         g.setColor(Color.WHITE);
-        g.drawString(String.format("Runtime %02d:%02d:%02d", h, m, s), 10, 120);
+        g.drawString(runtimeFormatted(startTime), 10, 120);
 
         g.drawString(String.format("Trees cut %d", treesCut) , 10, 140);
         g.drawString(String.format("Woodcutting level %d", level1) , 10, 160);

@@ -1,0 +1,47 @@
+package CustomAPI;
+
+import java.util.List;
+import java.util.Random;
+import CustomAPI.ClientContext.*;
+
+import static CustomAPI.ClientContext.invalidItemID;
+
+public class Inventory extends org.powerbot.script.rt4.Inventory {
+
+    public Inventory(org.powerbot.script.rt4.ClientContext ctx) {
+        super(ctx);
+    }
+
+    public int[] pattern() {
+        Random r = new Random();
+        int i;
+        i = r.nextInt(100);
+        int[] pattern0 = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27};
+        int[] pattern1 = {0,1,2,3,7,6,5,4,8,9,10,11,15,14,13,12,16,17,18,19,23,22,21,20,24,25,26,27};
+        int[] pattern2 = {0,1,4,5,8,9,12,13,16,17,20,21,24,25,26,27,22,23,18,19,14,15,10,11,6,7,2,3};
+
+        if (i%5 == 0) return pattern2;
+        else if (i%4 == 0) return pattern0;
+        else return pattern1;
+    }
+
+    public boolean hasAll(int[] itemIDs) {
+        for (int i : itemIDs) {
+            if (ctx.inventory.select().id(i).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int selectID(List<itemSkillPair> pairs, int skill) {
+        int level = ctx.skills.realLevel(skill);
+        for (itemSkillPair isp : pairs) {
+            if (ctx.inventory.select().id(isp.ID).count(true) > 0 &&
+                    level >= isp.level) {
+                return isp.ID;
+            }
+        }
+        return invalidItemID;
+    }
+}
