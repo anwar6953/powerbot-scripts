@@ -42,7 +42,7 @@ public class Functions<C extends ClientContext> extends ClientAccessor<C> {
         } else {
             return false;
         }
-    }
+    }sss
 
     public int remainingXP(int skill) {
         int level = ctx.skills.level(skill);
