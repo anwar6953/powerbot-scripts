@@ -87,4 +87,9 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
             if (ctx.inventory.select().count() != 0) depositInventory();
         }
     }
+
+    public boolean isRunning() {
+        Condition.sleep(500);
+        return ctx.widgets.component(160,24).textureId() == 1065;
+    }
 }

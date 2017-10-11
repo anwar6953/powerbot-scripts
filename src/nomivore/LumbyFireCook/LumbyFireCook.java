@@ -1,11 +1,12 @@
 package nomivore.LumbyFireCook;
 
-import nomivore.Functions;
+import CustomAPI.Bank;
+import CustomAPI.ClientContext;
+import CustomAPI.PollingScript;
 import nomivore.ID;
 import org.powerbot.script.*;
 import org.powerbot.script.rt4.*;
 import org.powerbot.script.rt4.Component;
-import org.powerbot.script.rt4.ClientContext;
 
 import java.awt.*;
 import java.util.concurrent.Callable;
@@ -17,7 +18,6 @@ import java.util.List;
         description = "Lights fires and cooks at lumby bank")
 public class LumbyFireCook extends PollingScript<ClientContext> implements PaintListener, MessageListener {
 
-    private Functions f = new Functions(ctx);
     private final Tile destTile = new Tile(3206,3224,2);
     private final Tile bankTile = new Tile(3208,3220,2);
 
@@ -31,9 +31,11 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
     private int startExp;
 //    private String interact = "Use";
     private boolean lit = false;
+    private long startTime;
 
     @Override
     public void start() {
+        startTime = getRuntime();
         startExp = ctx.skills.experience(skill);
         final LumbyFireCookGUI gui = new LumbyFireCookGUI(ctx);
 
@@ -107,7 +109,7 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                     if (!ctx.players.local().inMotion()) ctx.movement.step(bankTile);
                 } else {
                     if (ctx.bank.opened()) {
-                        f.depositInventory();
+                        depositInventory();
                         for (int selectResource : foodIDs) {
                             if (ctx.bank.select().id(selectResource).count(true) > 0) {
                                 foodToCook = selectResource;
@@ -117,9 +119,9 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                         if (ctx.bank.select().id(foodToCook).count(true) == 0) ctx.controller.stop();
                         ctx.bank.withdraw(toolID,1);
                         ctx.bank.withdraw(foodToCook, Bank.Amount.ALL);
-                        f.closeBank();
+                        closeBank();
                     } else {
-                        f.openNearbyBank();
+                        openNearbyBank();
                     }
                 }
                 break;
@@ -172,14 +174,10 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
         final Graphics2D g = (Graphics2D) graphics;
         g.setFont(TAHOMA);
 
-        int s = (int)Math.floor(getRuntime()/1000 % 60);
-        int m = (int)Math.floor(getRuntime()/60000 % 60);
-        int h = (int)Math.floor(getRuntime()/3600000);
-
         int exp = ctx.skills.experience(skill) - startExp;
-        int expHr = (int)(exp*3600000D/getRuntime());
+        int expHr = (int)(exp*3600000D/realRuntime(startTime));
         g.setColor(Color.WHITE);
-        g.drawString(String.format("Runtime %02d:%02d:%02d", h, m, s), 10, 120);
+        g.drawString(runtimeFormatted(startTime), 10, 120);
         g.drawString(String.format("Food cooked %d", foodCooked) , 10, 140);
         g.drawString(String.format("Cooking level %d", level) , 10, 160);
         g.drawString(String.format("Exp %d/hr", expHr) , 10, 180);

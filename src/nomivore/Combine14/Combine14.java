@@ -1,8 +1,11 @@
 package nomivore.Combine14;
 
+import CustomAPI.Bank;
+import CustomAPI.ClientContext;
+import CustomAPI.ClientContext.*;
+import CustomAPI.PollingScript;
+
 import org.powerbot.script.*;
-import org.powerbot.script.rt4.Bank;
-import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Game;
 import org.powerbot.script.rt4.Item;
 import nomivore.ID;
@@ -17,8 +20,6 @@ import static java.lang.Math.min;
         name = "Comcubiner", properties = "author=nomivore; topic=1338568; client=4;",
         description = "Combines items")
 public class Combine14 extends PollingScript<ClientContext> implements PaintListener, MessageListener {
-
-
     private int resourceID1;
     private int resourceID2;
     private int resourceLeft1;
@@ -26,7 +27,7 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
     private int productDone;
     private boolean hasResource;
     private boolean stop;
-
+    private long startTime;
 
     public static List<Combine14GUI.IDPair> itemList = new ArrayList();
 
@@ -37,6 +38,7 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
         while(!gui.done()) {
             Condition.sleep();
         }
+        startTime = getRuntime();
     }
 
     @Override
@@ -60,19 +62,11 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
         }
         if (stop) ctx.controller.stop();
     }
-//
-//
-//    public void initialise() {
-//        openNearbyBank();
-//        if (ctx.bank.opened()) {
-//            depositInventory();
-//        }
-//    }
-//
+
     public boolean activate() {
         return resourceLeft1 > 0 && resourceLeft2 > 0;
     }
-//
+
     public void execute() {
         if (ctx.chat.canContinue()) {
             ctx.input.send("{VK_SPACE}");
@@ -190,18 +184,9 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
         final Graphics2D g = (Graphics2D) graphics;
         g.setFont(TAHOMA);
 
-        int s = (int)Math.floor(getRuntime()/1000 % 60);
-        int m = (int)Math.floor(getRuntime()/60000 % 60);
-        int h = (int)Math.floor(getRuntime()/3600000);
-
         g.setColor(Color.WHITE);
-        g.drawString(String.format("Runtime %02d:%02d:%02d", h, m, s), 10, 120);
-
-
+        g.drawString(runtimeFormatted(startTime), 10, 120);
         g.drawString(String.format("Current made %d", productDone) , 10, 140);
-//        g.drawString(String.format("Crafting level %d", level) , 10, 160);
-//        g.drawString(String.format("Exp %d/hr", expHr) , 10, 180);
-
         g.setColor(Color.BLACK);
         AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
         g.setComposite(alphaComposite);
@@ -222,64 +207,5 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
             openNearbyBank();
         }
 
-    }
-
-    public void openNearbyBank() {
-        if (ctx.bank.inViewport()) {
-            if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
-            if (ctx.bank.open()) {
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return ctx.bank.opened();
-                    }
-                }, 250, 10);
-            }
-        } else {
-            ctx.camera.turnTo(ctx.bank.nearest());
-        }
-    }
-
-    public void depositInventory() {
-        if (ctx.bank.depositInventory()) {
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return ctx.inventory.select().count() == 0;
-                }
-            });
-        }
-    }
-
-    public void closeBank() {
-        if (ctx.bank.opened()) {
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-//          ctx.bank.close();
-                    ctx.input.send("{VK_ESCAPE}");
-                    return !ctx.bank.opened();
-                }
-            });
-        }
-    }
-
-    public int selectResource(int[] itemArray) {
-        for (int selectResource : itemArray) {
-            if (ctx.bank.select().id(selectResource).count(true) > 0) {
-                return selectResource;
-            }
-        }
-        for (int selectResource : itemArray) {
-            if (ctx.inventory.select().id(selectResource).count(true) > 0) {
-                return selectResource;
-            }
-        }
-        return 0;
-    }
-
-    public void logout() {
-        ctx.game.tab(Game.Tab.LOGOUT);
-        ctx.widgets.component(182, 10).interact("Logout");
     }
 }

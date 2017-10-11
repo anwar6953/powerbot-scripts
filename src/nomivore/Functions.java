@@ -1,5 +1,5 @@
 package nomivore;
-
+/*
 import org.powerbot.script.*;
 import org.powerbot.script.ClientAccessor;
 import org.powerbot.script.Condition;
@@ -134,3 +134,4 @@ public class Functions<C extends ClientContext> extends ClientAccessor<C> {
         }
     }
 }
+*/
