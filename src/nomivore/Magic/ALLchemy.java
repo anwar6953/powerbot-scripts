@@ -21,7 +21,7 @@ import static org.powerbot.script.rt4.Magic.Spell.HIGH_ALCHEMY;
 @Script.Manifest(
         name = "ALLchemy", properties = "author=nomivore; topic=1338851; client=4;",
         description = "High alchs all items in inventory, supports equippables")
-public class HighAlch extends PollingScript<ClientContext> implements PaintListener {
+public class ALLchemy extends PollingScript<ClientContext> implements PaintListener {
     private Component highAlch = ctx.widgets.component(ID.MAGIC_WIDGET,ID.SPELL_HIGH_ALCH);
     private int productDone;
     private int level;
