@@ -8,6 +8,8 @@ public class ClientContext extends org.powerbot.script.rt4.ClientContext {
     public final Players players;
     public final Movement movement;
     public final Skills skills;
+    public final Magic magic;
+
 
     public ClientContext(org.powerbot.script.rt4.ClientContext ctx) {
         super(ctx);
@@ -16,6 +18,7 @@ public class ClientContext extends org.powerbot.script.rt4.ClientContext {
         this.players = new Players(ctx);
         this.movement = new Movement(ctx);
         this.skills = new Skills(ctx);
+        this.magic = new Magic(ctx);
     }
 
 

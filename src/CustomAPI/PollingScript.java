@@ -44,16 +44,24 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
         return ctx.chat.sendInput(s);
     }
 
+    public void deselectItem() {
+        if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
+    }
+
     public void openNearbyBank() {
         if (ctx.bank.inViewport()) {
             if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
+
             if (ctx.bank.open()) {
                 Condition.wait(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
                         return ctx.bank.opened();
                     }
-                }, 250, 10);
+                }, 250, 5);
+            }
+            if (!ctx.bank.opened()) {
+                ctx.input.click(true);
             }
         } else {
             ctx.camera.turnTo(ctx.bank.nearest());

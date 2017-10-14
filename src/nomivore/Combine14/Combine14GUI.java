@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Combine14GUI extends JFrame {
+public class Combine14GUI {
     private boolean done = false;
     private JFrame frame = new JFrame("Combine14");
     private JButton button1 = new JButton("Start");
@@ -20,13 +20,14 @@ public class Combine14GUI extends JFrame {
     private JTextField textField2 = new JTextField();
     private JList list1 = new JList();
     private JList list2 = new JList();
+    private JComboBox<IDPair> dropList = new JComboBox();
     private DefaultListModel listModel1 = new DefaultListModel();
     private DefaultListModel listModel2 = new DefaultListModel();
 
     public Combine14GUI() {
-        setLayout(new BorderLayout());
+        frame.setLayout(new BorderLayout());
         Container pane = frame.getContentPane();
-        setContentPane(pane);
+        frame.setContentPane(pane);
 
         textField1.setMaximumSize(new Dimension(75, 20));
         textField1.setPreferredSize(new Dimension(75, 20));
@@ -54,9 +55,9 @@ public class Combine14GUI extends JFrame {
         list1.setMaximumSize(new Dimension(100, 250));
         pane.add(list2, BorderLayout.CENTER);
 
-        pack();
-        setVisible(true);
-        setLocationRelativeTo(null);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
         list1.setModel(listModel1);
         list2.setModel(listModel2);
 
@@ -66,9 +67,11 @@ public class Combine14GUI extends JFrame {
 //        displayList.add(new IDPair(ID.PIZZA_INCOMPLETE,ID.CHEESE,"Uncooked pizza"));
         displayList.add(new IDPair(ID.JUG_WATER,ID.GRAPES,"Wine maker"));
         displayList.add(new IDPair(1755,1623,"Cut sapphires"));
+        displayList.add(new IDPair(227,249,"Unfinished guam potions"));
 
         for (IDPair i : displayList) {
             listModel2.addElement(i.name);
+            dropList.addItem(i);
         }
 
         list1.addMouseListener(new MouseAdapter() {
@@ -112,7 +115,7 @@ public class Combine14GUI extends JFrame {
                     }
                 }
                 done = true;
-                dispose();
+                frame.dispose();
             }
         });
 
