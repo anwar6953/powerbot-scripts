@@ -73,20 +73,17 @@ public class LumbyFireCookGUI extends JFrame {
         });
 
 
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for(int i = 0; i< list1.getModel().getSize();i++){
+        button1.addActionListener(e -> {
+            for(int i = 0; i< list1.getModel().getSize();i++){
 //                    System.out.println(list1.getModel().getElementAt(i));
-                    for (foodItem it : foodList) {
-                        if (it.name.equals(list1.getModel().getElementAt(i))) {
-                            LumbyFireCook.foodIDs.add(it.ID);
-                        }
+                for (foodItem it : foodList) {
+                    if (it.name.equals(list1.getModel().getElementAt(i))) {
+                        LumbyFireCook.foodIDs.add(it.ID);
                     }
                 }
-                done = true;
-                dispose();
             }
+            done = true;
+            dispose();
         });
     }
 

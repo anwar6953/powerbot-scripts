@@ -42,42 +42,20 @@ public class SarimSeagulls extends PollingScript<ClientContext> implements Paint
         }
         switch (getState()) {
             case ATTACK:
-                Npc npc = ctx.npcs.select().id(npcs).nearest().select(new Filter<Npc>()
-                {
-                    @Override
-                    public boolean accept(Npc npc)
-                    {
-                        return npc.healthPercent() > 0 && npc.animation() == -1;
-                    }
-                }).poll();
+                Npc npc = ctx.npcs.select().id(npcs).nearest().select(npc1 -> npc1.healthPercent() > 0 && npc1.animation() == -1).poll();
                 if (!npc.inCombat()) {
                     npc.interact("Attack");
                 }
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return ctx.players.local().interacting().valid();
-                    }
-                },100,15);
+                Condition.wait(() -> ctx.players.local().interacting().valid(),100,15);
                 if (ctx.players.local().interacting().valid()) {
-                    Condition.wait(new Callable<Boolean>() {
-                        @Override
-                        public Boolean call() throws Exception {
-                            return !ctx.players.local().interacting().valid() || ctx.players.local().interacting().healthPercent() == 0;
-                        }
-                    }, 500, 5);
+                    Condition.wait(() -> !ctx.players.local().interacting().valid() || ctx.players.local().interacting().healthPercent() == 0, 500, 5);
 //                    hpXP = ctx.skills.experience(Constants.SKILLS_HITPOINTS);
                 }
                 break;
             case LOOT:
                 final GroundItem item = ctx.groundItems.select(2).id(loot).poll();
                 item.interact("Take");
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return !item.valid();
-                    }
-                }, 500, 3);
+                Condition.wait(() -> !item.valid(), 500, 3);
 //                if (item.valid()) item.click();
                 break;
             case WALK:
@@ -92,21 +70,11 @@ public class SarimSeagulls extends PollingScript<ClientContext> implements Paint
                         looted += ctx.inventory.select().id(loot).count();
 //                        ctx.depositBox.depositInventory();
                         ctx.depositBox.deposit(loot, DepositBox.Amount.ALL);
-                        Condition.wait(new Callable<Boolean>() {
-                            @Override
-                            public Boolean call() throws Exception {
-                                return ctx.inventory.select().id(loot).isEmpty();
-                            }
-                        },500,4);
+                        Condition.wait(() -> ctx.inventory.select().id(loot).isEmpty(),500,4);
                         ctx.input.send("{VK_ESCAPE}");
                     } else {
                         ctx.objects.select().id(depositBoxID).poll().interact("Deposit");
-                        Condition.wait(new Callable<Boolean>() {
-                            @Override
-                            public Boolean call() throws Exception {
-                                return ctx.depositBox.opened();
-                            }
-                        },500,4);
+                        Condition.wait(() -> ctx.depositBox.opened(),500,4);
                     }
                 }
                 break;

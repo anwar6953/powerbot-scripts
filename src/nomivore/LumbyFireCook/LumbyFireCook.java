@@ -9,7 +9,6 @@ import org.powerbot.script.rt4.*;
 import org.powerbot.script.rt4.Component;
 
 import java.awt.*;
-import java.util.concurrent.Callable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
 
     private int toolID = ID.TINDERBOX;
     public static List<Integer> foodIDs = new ArrayList();
-    private Component cookUI = ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE);
+    private Component cookUI = ctx.widgets.component(ID.WIDGET_MAKE, ID.COMPONENT_MAKE);
     private int foodToCook;
     private int foodCooked;
     private int level;
@@ -60,12 +59,7 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                 lit = false;
                 GroundItem logs = ctx.groundItems.select(7).id(ID.LOGS_NORMAL).nearest().poll();
                 logs.interact("Light");
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return lit;
-                    }
-                }, 500, 20);
+                Condition.wait(() -> lit, 500, 20);
                 break;
             case ACTION:
 //                Condition.sleep(nap);
@@ -76,27 +70,13 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
                 food.interact("Use");
                 fire.interact("Use", "Fire");
                 Condition.sleep(1000);
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return cookUI.visible();
-                    }
-                },500, 5);
+                Condition.wait(() -> cookUI.visible(),500, 5);
                 if (cookUI.visible()) {
-                    cookUI.interact("Cook all");
-                    Condition.wait(new Callable<Boolean>() {
-                        @Override
-                        public Boolean call() throws Exception {
-                            return temp != foodCooked;
-                        }
-                    }, 500, 5);
+//                    cookUI.interact("Cook all");
+                    ctx.input.send("1");
+                    Condition.wait(() -> temp != foodCooked, 500, 5);
                     if (temp != foodCooked) {
-                        Condition.wait(new Callable<Boolean>() {
-                            @Override
-                            public Boolean call() throws Exception {
-                                return ctx.inventory.select().id(foodToCook).isEmpty() || ctx.chat.canContinue() || ctx.objects.select(3).id(ID.FIRE).isEmpty();
-                            }
-                        }, 1000, 65);
+                        Condition.wait(() -> ctx.inventory.select().id(foodToCook).isEmpty() || ctx.chat.canContinue() || ctx.objects.select(3).id(ID.FIRE).isEmpty(), 1000, 65);
                     }
                 }
                 break;

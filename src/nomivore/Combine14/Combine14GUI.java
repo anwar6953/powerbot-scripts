@@ -101,33 +101,27 @@ public class Combine14GUI {
         });
 
 
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for(int i = 0; i< list1.getModel().getSize();i++){
+        button1.addActionListener(e -> {
+            for(int i = 0; i< list1.getModel().getSize();i++){
 //                    System.out.println(list1.getModel().getElementAt(i));
-                    for (IDPair it : displayList) {
-                        if (it.name.equals(list1.getModel().getElementAt(i))) {
+                for (IDPair it : displayList) {
+                    if (it.name.equals(list1.getModel().getElementAt(i))) {
 //                            System.out.println(list1.getModel().getElementAt(i));
 //                            System.out.printf("%d, %d",it.a, it.b);
-                            Combine14.itemList.add(new IDPair(it.a, it.b, it.name));
-                        }
+                        Combine14.itemList.add(new IDPair(it.a, it.b, it.name));
                     }
                 }
-                done = true;
-                frame.dispose();
             }
+            done = true;
+            frame.dispose();
         });
 
-        button2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int a = readIntTF(textField1);
-                int b = readIntTF(textField2);
-                String s = String.format("%d %d",a,b);
-                displayList.add(new IDPair(a,b,s));
-                listModel1.addElement(s);
-            }
+        button2.addActionListener(e -> {
+            int a = readIntTF(textField1);
+            int b = readIntTF(textField2);
+            String s = String.format("%d %d",a,b);
+            displayList.add(new IDPair(a,b,s));
+            listModel1.addElement(s);
         });
     }
 

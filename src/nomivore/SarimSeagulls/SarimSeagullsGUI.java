@@ -33,15 +33,12 @@ public class SarimSeagullsGUI extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
 
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (comboBox.getSelectedItem().equals("Bank bones")) action = 1;
-                if (comboBox.getSelectedItem().equals("Bury bones")) action = 2;
-                if (comboBox.getSelectedItem().equals("Just kill")) action = 3;
-                done = true;
-                dispose();
-            }
+        button1.addActionListener(e -> {
+            if (comboBox.getSelectedItem().equals("Bank bones")) action = 1;
+            if (comboBox.getSelectedItem().equals("Bury bones")) action = 2;
+            if (comboBox.getSelectedItem().equals("Just kill")) action = 3;
+            done = true;
+            dispose();
         });
     }
 

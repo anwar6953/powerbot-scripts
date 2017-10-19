@@ -46,8 +46,7 @@ public class ALLchemy extends PollingScript<ClientContext> implements PaintListe
         switch (getState()) {
             case ACTION:
                 dragItem();
-                deselectItem();
-//                equipCheck();
+                ctx.inventory.deselectItem();
                 if (ctx.magic.isSelected(HIGH_ALCHEMY)) {
                     ctx.input.send("{VK_ESCAPE}");
                 } else if (!ctx.magic.isSelected(HIGH_ALCHEMY) &&
@@ -60,20 +59,10 @@ public class ALLchemy extends PollingScript<ClientContext> implements PaintListe
                 } else {
                     ctx.input.send("{VK_F6}");
                 }
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return ctx.game.tab() == Game.Tab.INVENTORY;
-                    }
-                }, 400, 3);
+                Condition.wait(() -> ctx.game.tab() == Game.Tab.INVENTORY, 400, 3);
                 if (ctx.game.tab() == Game.Tab.INVENTORY) {
                     highAlch.interact("Cast");
-                    Condition.wait(new Callable<Boolean>() {
-                        @Override
-                        public Boolean call() throws Exception {
-                            return (ctx.players.local().animation() != -1);
-                        }
-                    }, 300, 3);
+                    Condition.wait(() -> (ctx.players.local().animation() != -1), 300, 3);
                 }
                 break;
             case WITHDRAW:
@@ -94,12 +83,7 @@ public class ALLchemy extends PollingScript<ClientContext> implements PaintListe
     private void dragItem() {
         inven = ctx.inventory.items();
         if (!inven[15].valid() || inven[15].id() == ID.GOLD || inven[15].id() == ID.RUNE_NATURE) {
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return ctx.game.tab(Game.Tab.INVENTORY);
-                }
-            });
+            Condition.wait(() -> ctx.game.tab(Game.Tab.INVENTORY));
             for (Item it : inven) {
                 System.out.print(it.id());
                 if (!(it.id() == ID.RUNE_NATURE || it.id() == ID.GOLD) && it.valid()) {

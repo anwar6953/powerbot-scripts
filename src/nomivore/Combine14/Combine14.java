@@ -2,7 +2,6 @@ package nomivore.Combine14;
 
 import CustomAPI.Bank;
 import CustomAPI.ClientContext;
-import CustomAPI.ClientContext.*;
 import CustomAPI.PollingScript;
 
 import org.powerbot.script.*;
@@ -13,7 +12,6 @@ import nomivore.ID;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import static java.lang.Math.min;
 @Script.Manifest(
@@ -134,41 +132,22 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
         final int temp = ctx.inventory.select().id(resourceID2).count();
 
         if(resource1.interact("Use") && resource2.interact("Use")) {
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE).visible();
-                }
-            },500,4);
+            Condition.wait(() -> ctx.widgets.component(ID.WIDGET_MAKE, ID.COMPONENT_MAKE).visible(),500,4);
         }
-        if (ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE).visible()) {
-            ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE).interact("Make all");
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return temp != ctx.inventory.select().id(resourceID2).count();
-                }
-            }, 500, 4);
+        if (ctx.widgets.component(ID.WIDGET_MAKE, ID.COMPONENT_MAKE).visible()) {
+//            ctx.widgets.component(ID.COMPONENT_MAKE, ID.COMPONENT_MAKE).interact("Make all");
+            ctx.input.send("1");
+            Condition.wait(() -> temp != ctx.inventory.select().id(resourceID2).count(), 500, 4);
             if (temp != ctx.inventory.select().id(resourceID2).count()) {
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return (ctx.inventory.select().id(resourceID1).count() == 0 ||
-                                ctx.inventory.select().id(resourceID2).count() == 0) ||
-                                ctx.chat.canContinue();
-                    }
-                }, 500, 45);
+                Condition.wait(() -> (ctx.inventory.select().id(resourceID1).count() == 0 ||
+                        ctx.inventory.select().id(resourceID2).count() == 0) ||
+                        ctx.chat.canContinue(), 500, 45);
             }
         } else {
             if (temp != ctx.inventory.select().id(resourceID2).count()) {
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return (ctx.inventory.select().id(resourceID1).count() == 0 ||
-                                ctx.inventory.select().id(resourceID2).count() == 0) ||
-                                ctx.chat.canContinue();
-                    }
-                }, 500, 45);
+                Condition.wait(() -> (ctx.inventory.select().id(resourceID1).count() == 0 ||
+                        ctx.inventory.select().id(resourceID2).count() == 0) ||
+                        ctx.chat.canContinue(), 500, 45);
             }
         }
     }
@@ -196,12 +175,7 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
     public void epilogue() {
         if (ctx.bank.opened()) {
             if (ctx.bank.depositInventory()) {
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return ctx.inventory.select().count() == 0;
-                    }
-                });
+                Condition.wait(() -> ctx.inventory.select().count() == 0);
             }
         } else {
             openNearbyBank();

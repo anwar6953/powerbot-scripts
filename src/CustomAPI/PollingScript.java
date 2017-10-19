@@ -1,5 +1,6 @@
 package CustomAPI;
 
+import nomivore.ID;
 import org.powerbot.script.Condition;
 
 import java.util.Random;
@@ -20,17 +21,14 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
         return getRuntime() - startTime;
     }
 
+
+
     public void closeBank() {
         i = r.nextInt(100);
         if (ctx.bank.opened()) {
             if (i%9 == 0) ctx.bank.close();
             else ctx.input.send("{VK_ESCAPE}");
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return !ctx.bank.opened();
-                }
-            }, 500, 4);
+            Condition.wait(() -> !ctx.bank.opened(), 500, 4);
         }
     }
 
@@ -44,8 +42,11 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
         return ctx.chat.sendInput(s);
     }
 
-    public void deselectItem() {
-        if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
+    public boolean checkAllSelected() {
+        if (ctx.widgets.component(ID.WIDGET_MAKE,ID.COMPONENT_MAKE).visible()) {
+            return ctx.widgets.component(ID.WIDGET_MAKE,12).textureId() == -1;
+        }
+        return false;
     }
 
     public void openNearbyBank() {
@@ -53,12 +54,7 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
             if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
 
             if (ctx.bank.open()) {
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return ctx.bank.opened();
-                    }
-                }, 250, 5);
+                Condition.wait(() -> ctx.bank.opened(), 250, 5);
             }
             if (!ctx.bank.opened()) {
                 ctx.input.click(true);
@@ -72,12 +68,7 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
         if (ctx.bank.inViewport()) {
             if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
             if (ctx.objects.select(10).id(objID).nearest().poll().interact(action)) {
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return ctx.bank.opened();
-                    }
-                }, 250, 10);
+                Condition.wait(() -> ctx.bank.opened(), 250, 10);
             }
         } else {
             ctx.camera.turnTo(ctx.objects.select(10).id(objID).nearest().poll());
@@ -86,12 +77,7 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
 
     public void depositInventory() {
         if (ctx.bank.depositInventory()) {
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return ctx.inventory.select().count() == 0;
-                }
-            },500,6);
+            Condition.wait(() -> ctx.inventory.select().count() == 0,500,6);
             if (ctx.inventory.select().count() != 0) depositInventory();
         }
     }

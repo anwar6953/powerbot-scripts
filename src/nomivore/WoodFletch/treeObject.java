@@ -11,13 +11,11 @@ public class treeObject {
     int logID;
     Tile dest;
     int level;
-    Component widget;
 
-    public treeObject(String s, int i, Tile t, int l, Component w) {
+    public treeObject(String s, int i, Tile t, int l) {
         treeName = s;
         logID = i;
         dest = t;
         level = l;
-        widget = w;
     }
 }

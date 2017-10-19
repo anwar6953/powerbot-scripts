@@ -3,6 +3,7 @@ package CustomAPI;
 import java.util.List;
 import java.util.Random;
 import CustomAPI.ClientContext.*;
+import org.powerbot.script.rt4.Item;
 
 import static CustomAPI.ClientContext.invalidItemID;
 
@@ -25,6 +26,10 @@ public class Inventory extends org.powerbot.script.rt4.Inventory {
         else return pattern1;
     }
 
+    public void deselectItem() {
+        if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
+    }
+
     public boolean hasAll(int[] itemIDs) {
         for (int i : itemIDs) {
             if (ctx.inventory.select().id(i).isEmpty()) {
@@ -44,4 +49,44 @@ public class Inventory extends org.powerbot.script.rt4.Inventory {
         }
         return invalidItemID;
     }
+
+    public Item lastItem(int ID) {
+        Item last = nil();
+        for (Item it : ctx.inventory.items()) {
+            if (it.id()==ID && it.valid()) last = it;
+        }
+        return last;
+    }
+
+    public Item lastItem(int[] IDs) {
+        Item last = nil();
+        for (Item it : ctx.inventory.items()) {
+            for (int ID : IDs) {
+                if (it.id() == ID && it.valid()) last = it;
+            }
+        }
+        return last;
+    }
+
+    public Item firstLeft(int ID) {
+        int[] left = {0,4,8,12,16,20,24};
+        Item[] inven = ctx.inventory.items();
+        for (int index : left) {
+            if (inven[index].id()==ID && inven[index].valid()) return inven[index];
+        }
+        return ctx.inventory.select().id(ID).poll();
+    }
+
+    public Item lastLeft(int ID) {
+        int[] left = {0,4,8,12,16,20,24};
+        Item[] inven = ctx.inventory.items();
+        Item leItem = ctx.inventory.select().id(ID).poll();
+        for (int index : left) {
+            if (inven[index].id()==ID && inven[index].valid()) leItem = inven[index];
+        }
+        return leItem;
+    }
+
+//    public void dragItemTo(Item it, int index) {
+//    }
 }

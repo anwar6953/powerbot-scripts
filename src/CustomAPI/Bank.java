@@ -3,12 +3,22 @@ package CustomAPI;
 import CustomAPI.ClientContext.*;
 
 import java.util.List;
+import java.util.Random;
 
 import static CustomAPI.ClientContext.invalidItemID;
 
 public class Bank extends org.powerbot.script.rt4.Bank {
+
+    private Random r = new Random();
+    private int i;
+
     public Bank(org.powerbot.script.rt4.ClientContext ctx) {
         super(ctx);
+    }
+
+    public void hover(ClientContext ctx) {
+        i = r.nextInt(100)+1;
+        ctx.input.move(ctx.bank.nearest().tile().matrix(ctx).point(i/100,i/100,i%7));
     }
 
     public int selectID(int[] ids) {

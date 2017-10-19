@@ -2,9 +2,7 @@ package nomivore.WoodFletch;
 
 import nomivore.ID;
 
-import CustomAPI.Bank;
 import CustomAPI.ClientContext;
-import CustomAPI.ClientContext.*;
 import CustomAPI.PollingScript;
 
 import org.powerbot.script.Tile;
@@ -17,25 +15,23 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.Callable;
 
 @Script.Manifest(
         name = "SeerCutFletch", properties = "author=nomivore; topic=1338232; client=4;",
         description = "Cut wood fletch headless arrows at Seer's Village")
 public class YT_Woodcutter extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private Tile destTile;
-
-    private treeObject normal = new treeObject("Tree", ID.LOGS_NORMAL,new Tile(2758, 3460), 1, ctx.widgets.component(306, 7));
-    private treeObject oak = new treeObject("Oak", ID.LOGS_OAK,new Tile(2769, 3463), 15, ctx.widgets.component(305, 7));
-    private treeObject willow = new treeObject("Willow", ID.LOGS_WILLOW,new Tile(2711, 3510), 30, ctx.widgets.component(305, 7));
-    private treeObject maple = new treeObject("Maple tree", ID.LOGS_MAPLE,new Tile(2731, 3500), 45, ctx.widgets.component(305, 7));
+    private Component makeUI = ctx.widgets.component(ID.WIDGET_MAKE, ID.COMPONENT_MAKE);
+    private treeObject normal = new treeObject("Tree", ID.LOGS_NORMAL,new Tile(2758, 3460), 1);
+    private treeObject oak = new treeObject("Oak", ID.LOGS_OAK,new Tile(2769, 3463), 15);
+    private treeObject willow = new treeObject("Willow", ID.LOGS_WILLOW,new Tile(2711, 3510), 30);
+    private treeObject maple = new treeObject("Maple tree", ID.LOGS_MAPLE,new Tile(2731, 3500), 45);
 
     private List<treeObject> treeList = new ArrayList();
 
     private int[] logIDs = {ID.LOGS_NORMAL, ID.LOGS_OAK, ID.LOGS_WILLOW, ID.LOGS_MAPLE};
     private int logID;
     private String treeName;
-    private Component fletchShaft;
     private int treesCut;
     private int skill1 = Constants.SKILLS_WOODCUTTING;
     private int skill2 = Constants.SKILLS_FLETCHING;
@@ -89,32 +85,19 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
                     final Item logs = ctx.inventory.select().id(logID).poll();
                     final Item knife = ctx.inventory.select().id(ID.KNIFE).poll();
                     if (knife.interact("Use") && logs.interact("Use")) {
-                        Condition.wait(new Callable<Boolean>() {
-                            @Override
-                            public Boolean call() throws Exception {
-                                return fletchShaft.visible();
-                            }
-                        }, 250, 5);
+                        Condition.wait(() -> makeUI.visible(), 250, 5);
                     }
-                    if (fletchShaft.visible()) {
-                        makeXall();
-                        Condition.wait(new Callable<Boolean>() {
-                            @Override
-                            public Boolean call() throws Exception {
-                                return ctx.chat.pendingInput();
-                            }
-                        }, 500, 4);
-                        if (ctx.chat.pendingInput()) {
-                            ctx.chat.sendInput(33);
-                            Condition.wait(new Callable<Boolean>() {
-                                @Override
-                                public Boolean call() throws Exception {
-                                    return ctx.players.local().animation() == -1 ||
-                                            ctx.inventory.select().id(logID).isEmpty() ||
-                                            ctx.chat.canContinue();
-                                }
-                            }, 1000, 40);
-                        }
+                    if (makeUI.visible()) {
+                        ctx.input.send("1");
+                        Condition.wait(() -> ctx.players.local().animation() == -1 ||
+                                ctx.inventory.select().id(logID).isEmpty() ||
+                                ctx.chat.canContinue(), 1000, 40);
+//                        makeXall();
+//                        Condition.wait(ctx.chat::pendingInput, 500, 4);
+//                        if (ctx.chat.pendingInput()) {
+//                            ctx.chat.sendInput(33);
+//
+//                        }
                     }
                 }
                 Item[] inven = ctx.inventory.items();
@@ -135,23 +118,12 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
             case FLETCHARROW:
                 final Item feather = ctx.inventory.select().id(ID.FEATHER).poll();
                 final Item shaft = ctx.inventory.select().id(ID.ARROW_SHAFT).poll();
-                final Component makeUI = ctx.widgets.component(ID.WIDGET_CHATBOX, ID.WIDGET_MAKE);
                 if (feather.interact("Use") && shaft.interact("Use")) {
-                    Condition.wait(new Callable<Boolean>() {
-                        @Override
-                        public Boolean call() throws Exception {
-                            return makeUI.visible();
-                        }
-                    }, 250, 5);
+                    Condition.wait(() -> makeUI.visible(), 250, 5);
                 }
                 if (makeUI.visible()) {
-                    if (makeUI.interact("Make 10"))
-                        Condition.wait(new Callable<Boolean>() {
-                            @Override
-                            public Boolean call() throws Exception {
-                                return ctx.chat.canContinue();
-                            }
-                        },1000,10);
+                    if (ctx.input.send("1"))
+                        Condition.wait(ctx.chat::canContinue,1000,10);
                 }
                 break;
             case TODEST:
@@ -189,7 +161,6 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
                 treeName = t.treeName;
                 logID = t.logID;
                 destTile = t.dest;
-                fletchShaft = t.widget;
             }
         }
         if (destTile.distanceTo(ctx.players.local()) > 9) {
@@ -217,12 +188,7 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
         if (ctx.bank.inViewport()) {
             if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
             if (ctx.bank.open()) {
-                Condition.wait(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return ctx.bank.opened();
-                    }
-                }, 250, 10);
+                Condition.wait(() -> ctx.bank.opened(), 250, 10);
             }
         } else {
             ctx.camera.turnTo(ctx.bank.nearest());
@@ -231,23 +197,15 @@ public class YT_Woodcutter extends PollingScript<ClientContext> implements Paint
 
     public void depositInventory() {
         if (ctx.bank.depositInventory()) {
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    return ctx.inventory.select().count() == 0;
-                }
-            });
+            Condition.wait(() -> ctx.inventory.select().count() == 0);
         }
     }
 
     public void closeBank() {
         if (ctx.bank.opened()) {
-            Condition.wait(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    ctx.bank.close();
-                    return !ctx.bank.opened();
-                }
+            Condition.wait(() -> {
+                ctx.bank.close();
+                return !ctx.bank.opened();
             });
         }
     }
