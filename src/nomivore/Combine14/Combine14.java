@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Math.min;
-@Script.Manifest(
-        name = "Comcubiner", properties = "author=nomivore; topic=1338568; client=4;",
-        description = "Combines items")
+//@Script.Manifest(
+//        name = "Comcubiner", properties = "author=nomivore; topic=1338568; client=4;",
+//        description = "Combines items")
 public class Combine14 extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private int resourceID1;
     private int resourceID2;

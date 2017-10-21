@@ -12,9 +12,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Script.Manifest(
-        name = "LumbyFireCook", properties = "author=nomivore; topic=1338085; client=4;",
-        description = "Lights fires and cooks at lumby bank")
+//@Script.Manifest(
+//        name = "LumbyFireCook", properties = "author=nomivore; topic=1338085; client=4;",
+//        description = "Lights fires and cooks at lumby bank")
 public class LumbyFireCook extends PollingScript<ClientContext> implements PaintListener, MessageListener {
 
     private final Tile destTile = new Tile(3206,3224,2);
