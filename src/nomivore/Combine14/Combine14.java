@@ -90,11 +90,6 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
 
     @Override
     public void messaged(MessageEvent me) {
-//        if (me.text().contains(gameMsg)) {
-//            resourceLeft2 -= 1;
-//            resourceLeft1 -= 1;
-//            productDone += 1;
-//        }
     }
 
     private State getState() {
