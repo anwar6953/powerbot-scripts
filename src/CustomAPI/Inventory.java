@@ -39,6 +39,15 @@ public class Inventory extends org.powerbot.script.rt4.Inventory {
         return true;
     }
 
+    public int selectID(int[] ids) {
+        for (int selectResource : ids) {
+            if (ctx.inventory.select().id(selectResource).count(true) > 0) {
+                return selectResource;
+            }
+        }
+        return invalidItemID;
+    }
+
     public int selectID(List<itemSkillPair> pairs, int skill) {
         int level = ctx.skills.realLevel(skill);
         for (itemSkillPair isp : pairs) {

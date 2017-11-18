@@ -4,10 +4,7 @@ import nomivore.ID;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +13,8 @@ public class Combine14GUI {
     private JFrame frame = new JFrame("Combine14");
     private JButton button1 = new JButton("Start");
     private JButton button2 = new JButton("Add to list");
-    private JTextField textField1 = new JTextField();
-    private JTextField textField2 = new JTextField();
+    private JTextField textField1 = new JTextField(7);
+    private JTextField textField2 = new JTextField(7);
     private JList list1 = new JList();
     private JList list2 = new JList();
     private JComboBox<IDPair> dropList = new JComboBox();
@@ -29,12 +26,14 @@ public class Combine14GUI {
         Container pane = frame.getContentPane();
         frame.setContentPane(pane);
 
-        textField1.setMaximumSize(new Dimension(75, 20));
-        textField1.setPreferredSize(new Dimension(75, 20));
-        textField2.setMaximumSize(new Dimension(75, 20));
-        textField2.setPreferredSize(new Dimension(75, 20));
-        button2.setMaximumSize(new Dimension(50, 50));
-        button2.setPreferredSize(new Dimension(50, 50));
+        Dimension dTextfield = new Dimension(75, 20);
+        textField1.setMaximumSize(textField1.getPreferredSize());
+        textField1.setToolTipText("ID of item 1");
+        textField1.setText(textField1.getToolTipText());
+        textField2.setMaximumSize(textField2.getPreferredSize());
+        textField2.setToolTipText("ID of item 2");
+        textField2.setText(textField2.getToolTipText());
+        button2.setMaximumSize(button2.getPreferredSize());
 
         JPanel subPanel = new JPanel();
         subPanel.add(textField1);
@@ -47,12 +46,12 @@ public class Combine14GUI {
         button1.setPreferredSize(new Dimension(200, 50));
         pane.add(button1, BorderLayout.PAGE_END);
 
-        list1.setPreferredSize(new Dimension(100, 250));
-        list1.setMaximumSize(new Dimension(100, 250));
+        list1.setPreferredSize(new Dimension(100, 100));
+        list1.setMaximumSize(new Dimension(100, 100));
         pane.add(list1, BorderLayout.LINE_START);
 
-        list2.setPreferredSize(new Dimension(100, 250));
-        list1.setMaximumSize(new Dimension(100, 250));
+        list2.setPreferredSize(new Dimension(100, 100));
+        list1.setMaximumSize(new Dimension(100, 100));
         pane.add(list2, BorderLayout.CENTER);
 
         frame.pack();
@@ -73,6 +72,37 @@ public class Combine14GUI {
             listModel2.addElement(i.name);
             dropList.addItem(i);
         }
+
+        textField1.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField1.getText().equals(textField1.getToolTipText())) {
+                    textField1.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField1.getText().isEmpty()) {
+                    textField1.setText(textField1.getToolTipText());
+                }
+            }
+        });
+        textField2.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField2.getText().equals(textField2.getToolTipText())) {
+                    textField2.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField2.getText().isEmpty()) {
+                    textField2.setText(textField2.getToolTipText());
+                }
+            }
+        });
 
         list1.addMouseListener(new MouseAdapter() {
             @Override

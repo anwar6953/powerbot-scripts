@@ -2,6 +2,9 @@ package CustomAPI;
 
 import nomivore.ID;
 import org.powerbot.script.Condition;
+import org.powerbot.script.PaintListener;
+import org.powerbot.script.rt4.*;
+import org.powerbot.script.rt4.Component;
 
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -21,8 +24,6 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
         return getRuntime() - startTime;
     }
 
-
-
     public void closeBank() {
         i = r.nextInt(100);
         if (ctx.bank.opened()) {
@@ -31,6 +32,7 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
             Condition.wait(() -> !ctx.bank.opened(), 500, 4);
         }
     }
+    
 
     public boolean makeXall() {
         i = r.nextInt(100);
@@ -85,5 +87,18 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
     public boolean isRunning() {
         Condition.sleep(500);
         return ctx.widgets.component(160,24).textureId() == 1065;
+    }
+
+    public void waiterBoy(long startTime) {
+        Condition.sleep(1000);
+        long runTime = realRuntime(startTime);
+        int s = (int)Math.floor(realRuntime(startTime)/1000 % 60);
+        int m = (int)Math.floor(realRuntime(startTime)/60000 % 60);
+        int h = (int)Math.floor(realRuntime(startTime)/3600000);
+        if (m < 30) {
+            Condition.sleep(5000);
+        } else if (h >= 1) {
+            Condition.sleep(10000);
+        }
     }
 }

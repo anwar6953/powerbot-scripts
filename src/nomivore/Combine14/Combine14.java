@@ -124,22 +124,31 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
 
         final Item resource1 = ctx.inventory.select().id(resourceID1).poll();
         final Item resource2 = ctx.inventory.select().id(resourceID2).poll();
-        final int temp = ctx.inventory.select().id(resourceID2).count();
+        final int initialCount = ctx.inventory.select().id(resourceID2).count();
 
         if(resource1.interact("Use") && resource2.interact("Use")) {
-            Condition.wait(() -> ctx.widgets.component(ID.WIDGET_MAKE, ID.COMPONENT_MAKE).visible(),500,4);
+            Condition.wait(() -> ctx.widgets.component(ID.WIDGET_MAKE, ID.COMPONENT_MAKE).visible(),500,6);
         }
         if (ctx.widgets.component(ID.WIDGET_MAKE, ID.COMPONENT_MAKE).visible()) {
 //            ctx.widgets.component(ID.COMPONENT_MAKE, ID.COMPONENT_MAKE).interact("Make all");
             ctx.input.send("1");
-            Condition.wait(() -> temp != ctx.inventory.select().id(resourceID2).count(), 500, 4);
-            if (temp != ctx.inventory.select().id(resourceID2).count()) {
+            Condition.wait(() -> initialCount != ctx.inventory.select().id(resourceID2).count(), 500, 4);
+            if (initialCount != ctx.inventory.select().id(resourceID2).count()) {
                 Condition.wait(() -> (ctx.inventory.select().id(resourceID1).count() == 0 ||
                         ctx.inventory.select().id(resourceID2).count() == 0) ||
                         ctx.chat.canContinue(), 500, 45);
             }
         } else {
-            if (temp != ctx.inventory.select().id(resourceID2).count()) {
+            if (initialCount-1 == ctx.inventory.select().id(resourceID2).count()) {
+                Item[] inven = ctx.inventory.items();
+                for (Item it : inven) {
+                    if (it.id() == resource1.id()) {
+                        it.interact("Use");
+                        ctx.inventory.select().id(resourceID2).poll().interact("Use");
+                        Condition.sleep(300);
+                    }
+                }
+            } else if (initialCount-2 >= ctx.inventory.select().id(resourceID2).count()) {
                 Condition.wait(() -> (ctx.inventory.select().id(resourceID1).count() == 0 ||
                         ctx.inventory.select().id(resourceID2).count() == 0) ||
                         ctx.chat.canContinue(), 500, 45);

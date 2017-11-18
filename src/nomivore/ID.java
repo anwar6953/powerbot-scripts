@@ -261,6 +261,11 @@ public class ID {
             WIDGET_LEATHER_7 = 120;
 
     public static final int
+
+            COMPONENT_TRADE_ACCEPT_2 = 13;
+    ;
+
+    public static final int
             STAFF_EARTH = 1385,
             STAFF_FIRE = 1387,
             STAFF_WATER = 1383;

@@ -1,5 +1,9 @@
 package CustomAPI;
 
+import org.powerbot.script.PaintListener;
+
+import java.awt.*;
+
 public class ClientContext extends org.powerbot.script.rt4.ClientContext {
     public static final int invalidItemID = -1;
 
