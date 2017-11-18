@@ -12,6 +12,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import nomivore.LumbyFireCook.LumbyFireCookGUI;
+
 @Script.Manifest(
         name = "LumbyFireCook", properties = "author=nomivore; topic=1338085; client=4;",
         description = "Lights fires and cooks at lumby bank")

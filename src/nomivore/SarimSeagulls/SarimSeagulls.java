@@ -8,6 +8,7 @@ import org.powerbot.script.rt4.*;
 
 import java.awt.*;
 import java.util.concurrent.Callable;
+import nomivore.SarimSeagulls.SarimSeagullsGUI;
 
 @Script.Manifest(name = "SarimSeagulls", properties = "author=nomivore; topic=1338000; client=4;", description = "Attacks seagulls, banks/buries bones")
 public class SarimSeagulls extends PollingScript<ClientContext> implements PaintListener, MessageListener {
