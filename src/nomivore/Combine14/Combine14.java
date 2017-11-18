@@ -13,6 +13,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import nomivore.Combine14.Combine14GUI;
+
 import static java.lang.Math.min;
 @Script.Manifest(
         name = "Comcubiner", properties = "author=nomivore; topic=1338568; client=4;",
