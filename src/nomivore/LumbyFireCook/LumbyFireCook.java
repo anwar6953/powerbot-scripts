@@ -32,11 +32,11 @@ public class LumbyFireCook extends PollingScript<ClientContext> implements Paint
     private boolean lit = false;
     private long startTime;
 
+    LumbyFireCookGUI gui = new LumbyFireCookGUI(ctx);
     @Override
     public void start() {
         startTime = getRuntime();
         startExp = ctx.skills.experience(skill);
-        final LumbyFireCookGUI gui = new LumbyFireCookGUI(ctx);
 
         while(!gui.done()) {
             Condition.sleep();

@@ -28,11 +28,10 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
     private long startTime;
 
     public static List<Combine14GUI.IDPair> itemList = new ArrayList();
+    Combine14GUI gui = new Combine14GUI();
 
     @Override
     public void start() {
-        final Combine14GUI gui = new Combine14GUI();
-
         while(!gui.done()) {
             Condition.sleep();
         }

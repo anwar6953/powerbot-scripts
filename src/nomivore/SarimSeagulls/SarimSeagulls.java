@@ -21,11 +21,9 @@ public class SarimSeagulls extends PollingScript<ClientContext> implements Paint
     private int buried;
     private String state = "";
     private int action;
-
+    SarimSeagullsGUI gui = new SarimSeagullsGUI();
     @Override
     public void start() {
-        final SarimSeagullsGUI gui = new SarimSeagullsGUI();
-
         while(!gui.done()) {
             Condition.sleep();
         }
