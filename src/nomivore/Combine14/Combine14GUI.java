@@ -53,11 +53,14 @@ public class Combine14GUI {
         subPanel1.add(textField2);
         subPanel1.add(button2);
         JPanel subPanel2 = new JPanel();
-        subPanel2.add(textField1q);
-        subPanel2.add(textField2q);
+        subPanel2.add(new JLabel("0 for all, default 14-All"));
+        JPanel subPanel3 = new JPanel();
+        subPanel3.add(textField1q);
+        subPanel3.add(textField2q);
         JPanel borderSubPanel = new JPanel(new BorderLayout());
         borderSubPanel.add(subPanel1,BorderLayout.NORTH);
         borderSubPanel.add(subPanel2,BorderLayout.CENTER);
+        borderSubPanel.add(subPanel3,BorderLayout.SOUTH);
 
         pane.add(borderSubPanel,BorderLayout.LINE_END);
 
@@ -84,7 +87,7 @@ public class Combine14GUI {
 //        displayList.add(new IDPair(ID.DOUGH_PIZZA,ID.TOMATO,"Incomplete pizza"));
 //        displayList.add(new IDPair(ID.PIZZA_INCOMPLETE,ID.CHEESE,"Uncooked pizza"));
         displayList.add(new IDPair(ID.JUG_WATER,ID.GRAPES,14,14,"Wine maker"));
-        displayList.add(new IDPair(1755,1623,14,14,"Cut sapphires"));
+        displayList.add(new IDPair(1755,1623,1,14,"Cut sapphires"));
         displayList.add(new IDPair(227,249,14,14,"Unfinished guam potions"));
 
         for (IDPair i : displayList) {
