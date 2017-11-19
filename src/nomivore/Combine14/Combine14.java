@@ -13,8 +13,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import nomivore.Combine14.Combine14GUI;
-
 import static java.lang.Math.min;
 @Script.Manifest(
         name = "Comcubiner", properties = "author=nomivore; topic=1338568; client=4;",
@@ -24,6 +22,8 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
     private int resourceID2;
     private int resourceLeft1;
     private int resourceLeft2;
+    private int resourceQ1;
+    private int resourceQ2;
     private int productDone;
     private boolean hasResource;
     private boolean stop;
@@ -44,16 +44,18 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
     public void poll() {
         stop = true;
         for (Combine14GUI.IDPair i : itemList) {
-            if (i.a != 0 && i.b != 0) {
+            if (i.id1 != 0 && i.id2 != 0) {
                 hasResource = true;
                 resourceLeft1 = 1;
                 resourceLeft2 = 1;
-                resourceID1 = i.a;
-                resourceID2 = i.b;
+                resourceID1 = i.id1;
+                resourceID2 = i.id2;
+                resourceQ1 = i.id1q;
+                resourceQ2 = i.id2q;
                 if (activate()) execute();
                 if (!hasResource) {
-                    i.a = 0;
-                    i.b = 0;
+                    i.id1 = 0;
+                    i.id2 = 0;
                 }
                 stop = false;
                 break;
@@ -110,8 +112,18 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
             depositInventory();
             resourceLeft1 = ctx.bank.select().id(resourceID1).count(true);
             resourceLeft2 = ctx.bank.select().id(resourceID2).count(true);
-            ctx.bank.withdraw(resourceID1, 14);
-            ctx.bank.withdraw(resourceID2, Bank.Amount.ALL);
+            if (resourceQ1 == 0) {
+                ctx.bank.withdraw(resourceID1, Bank.Amount.ALL);
+            } else if (resourceQ1 == -1) {
+                ctx.bank.withdraw(resourceID1, 14);
+            } else {
+                ctx.bank.withdraw(resourceID1, resourceQ1);
+            }
+            if (resourceQ2 == 0 || resourceQ2 == -1) {
+                ctx.bank.withdraw(resourceID2, Bank.Amount.ALL);
+            } else {
+                ctx.bank.withdraw(resourceID2, resourceQ2);
+            }
             closeBank();
         } else {
             openNearbyBank();
