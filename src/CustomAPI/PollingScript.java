@@ -105,27 +105,58 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
             ctx.camera.turnTo(obj);
         }
     }
-//    public void moveOffScreen() {
-//        switch (random(0, 3)) {
-//            case 0: // To Top
-//                ctx.input.move(random(0, Game.getDimensions().getWidth()-1), 0);
-//                break;
-//            case 1: // To Bottom
-//                ctx.input.move(random(0, Game.getDimensions().getWidth()-1),
-//                        (int) (Game.getDimensions().getHeight()-1));
-//                break;
-//            case 2: // To Left
-//                ctx.input.move(0,
-//                        random(0, Game.getDimensions().getHeight()-1));
-//                break;
-//            case 3: // To Right
-//                ctx.input.move((int) (),
-//                        random(0, Game.getDimensions().getHeight()-1));
-//                break;
-//        }
-//    }
-//
-//    private static int random(double a, double b){
-//        return (int) Random.nextDouble(a, b+1);
-//    }
+    public void APmoveOffScreen() {
+        switch (random(0, 3)) {
+            case 0: // To Top
+                ctx.input.move(random(0, ctx.game.dimensions().getWidth()-1),0);
+                break;
+            case 1: // To Bottom
+                ctx.input.move(random(0, ctx.game.dimensions().getWidth()-1),
+                        (int) (ctx.game.dimensions().getHeight()-1));
+                break;
+            case 2: // To Left
+                ctx.input.move(0,
+                        random(0, ctx.game.dimensions().getHeight()-1));
+                break;
+            case 3: // To Right
+                ctx.input.move((int) ctx.game.dimensions().getWidth()-1,
+                        random(0, ctx.game.dimensions().getHeight()-1));
+                break;
+        }
+    }
+
+    public void APmoveRandom() {
+        switch (random(0, 5)) {
+            case 0: // To Top right
+                ctx.input.move(
+                        random(ctx.game.dimensions().getWidth()/2, ctx.game.dimensions().getWidth()-1),
+                        random(0, ctx.game.dimensions().getHeight()/2));
+                break;
+            case 1: // To Bottom right
+                ctx.input.move(
+                        random(ctx.game.dimensions().getWidth()/2, ctx.game.dimensions().getWidth()-1),
+                        random(ctx.game.dimensions().getHeight()/2, ctx.game.dimensions().getHeight()-1));
+                break;
+            case 2: // To Top left
+                ctx.input.move(
+                        random(0, ctx.game.dimensions().getWidth()/2),
+                        random(0, ctx.game.dimensions().getHeight()/2));
+                break;
+            case 3: // To Bottom left
+                ctx.input.move(
+                        random(0, ctx.game.dimensions().getWidth()/2),
+                        random(ctx.game.dimensions().getHeight()/2, ctx.game.dimensions().getHeight()-1));
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
+    }
+
+    private int random(double a, double b){
+        int min = (int)a;
+        int max = (int)b;
+        return r.nextInt((max-min)+1)+min;
+    }
 }

@@ -78,10 +78,12 @@ public class Rimmingbone extends PollingScript<ClientContext> implements PaintLi
                     if (!rimPortal.inViewport()) {
                         ctx.movement.step(rimPortal);
                         Condition.wait(() -> ctx.players.local().inMotion(), 500, 5);
+                        APmoveRandom();
                         Condition.wait(() -> !ctx.players.local().inMotion());
                     } else if (rimPortal.inViewport()) {
                         rimPortal.interact("Friend's house", "Portal");
-                        Condition.sleep(700);
+                        Condition.sleep();
+                        APmoveRandom();
                         ctx.input.send("{VK_ENTER}");
                         Condition.wait(() -> !ctx.objects.select(5).id(housePortalID).isEmpty());
                     }
@@ -95,11 +97,13 @@ public class Rimmingbone extends PollingScript<ClientContext> implements PaintLi
                     if (altar.inViewport()) {
                         Item bones = ctx.inventory.select().id(boneID).poll();
                         if (bones.interact("Use") && altar.interact("Use", "Altar")) {
+                            APmoveOffScreen();
                             Condition.wait(() -> ctx.chat.canContinue() || ctx.inventory.select().id(boneID).isEmpty(), 10000, 6);
                             level = ctx.skills.realLevel(skill);
                         }
                     } else {
                         ctx.movement.stepWait(altar);
+                        APmoveRandom();
                     }
                 }
                 break;
@@ -111,6 +115,7 @@ public class Rimmingbone extends PollingScript<ClientContext> implements PaintLi
                     APturnTo(portal);
                     if (!portal.inViewport()) {
                         ctx.movement.step(portal);
+                        APmoveRandom();
                         Condition.wait(() -> ctx.players.local().inMotion(), 500, 5);
                         Condition.wait(() -> !ctx.players.local().inMotion());
                     } else if (portal.inViewport()) {
@@ -123,15 +128,19 @@ public class Rimmingbone extends PollingScript<ClientContext> implements PaintLi
                     APturnTo(philly);
                     if (!philly.inViewport() && philly.valid()) {
                         ctx.movement.step(philly);
+                        APmoveRandom();
                         Condition.wait(() -> ctx.players.local().inMotion(), 500, 5);
                         Condition.wait(() -> !ctx.players.local().inMotion());
                     } else if (philly.inViewport() && philly.valid() && !ctx.inventory.select().id(notedBoneID).isEmpty()) {
                         ctx.inventory.deselectItem();
                         Item noted = ctx.inventory.select().id(notedBoneID).poll();
                         noted.interact("Use");
+                        Condition.sleep();
                         philly.interact("Use", npcName);
                         Condition.wait(ctx.chat::chatting, 500, 5);
                         if (ctx.chat.chatting()) {
+                            Condition.sleep();
+                            APmoveRandom();
                             ctx.input.send("3");
                             Condition.wait(() -> !ctx.chat.chatting(), 500, 5);
                         }
