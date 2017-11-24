@@ -15,8 +15,8 @@ import java.util.List;
 
 import static java.lang.Math.min;
 @Script.Manifest(
-        name = "Comcubiner", properties = "author=nomivore; topic=1338568; client=4;",
-        description = "Combines items")
+        name = "Item combiner", properties = "author=nomivore; topic=1338568; client=4;",
+        description = "Combines items, supports Make All and multi-item queuing")
 public class Combine14 extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private int resourceID1;
     private int resourceID2;
