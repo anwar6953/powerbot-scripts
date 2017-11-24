@@ -136,11 +136,11 @@ public class ALLchemy extends PollingScript<ClientContext> implements PaintListe
         int expHr = (int)(exp*3600000D/realRuntime(startTime));
 
         g.setColor(Color.WHITE);
-        g.drawString(runtimeFormatted(startTime), 10, 120);
-
-        g.drawString(String.format("Alched %d", productDone) , 10, 140);
-        g.drawString(String.format("Magic level %d", level) , 10, 160);
-        g.drawString(String.format("Exp %d/hr", expHr) , 10, 180);
+        g.drawString("Nomivore's Alcher", 10, 120);
+        g.drawString(runtimeFormatted(startTime), 10, 140);
+        g.drawString(String.format("Alched %d", productDone) , 10, 160);
+        g.drawString(String.format("Magic level %d", level) , 10, 180);
+        g.drawString(String.format("Exp %d/hr", expHr) , 10, 200);
 
         g.setColor(Color.BLACK);
         AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);

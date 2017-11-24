@@ -181,8 +181,9 @@ public class Combine14 extends PollingScript<ClientContext> implements PaintList
         g.setFont(TAHOMA);
 
         g.setColor(Color.WHITE);
-        g.drawString(runtimeFormatted(startTime), 10, 120);
-        g.drawString(String.format("Current made %d", productDone) , 10, 140);
+        g.drawString("Nomivore's Comcubiner", 10, 120);
+        g.drawString(runtimeFormatted(startTime), 10, 140);
+        g.drawString(String.format("Current made %d", productDone) , 10, 160);
         g.setColor(Color.BLACK);
         AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
         g.setComposite(alphaComposite);
