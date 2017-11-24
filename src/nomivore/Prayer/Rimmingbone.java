@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
         name = "RimmingBone", properties = "author=nomivore; topic=1340394; client=4;",
         description = "Gilded altar at Rimmington script")
 public class Rimmingbone extends PollingScript<ClientContext> implements PaintListener, MessageListener {
+    private int ornateRejPoolID = 29241;
     private int altarID = 13197;
     private String npcName = "Phials";
     private int housePortalID = 4525;
@@ -91,6 +92,19 @@ public class Rimmingbone extends PollingScript<ClientContext> implements PaintLi
                 break;
             case OFFERING:
                 //check if altar, use bones on altar
+                if (ctx.movement.energyLevel() < 30) {
+                    GameObject pool = ctx.objects.select().id(ornateRejPoolID).nearest().poll();
+                    if (pool.valid()) {
+                        APturnTo(pool);
+                        if (pool.inViewport()) {
+                            pool.interact("Drink", "Ornate rejuvenation pool");
+                            Condition.wait(()->ctx.movement.energyLevel() > 90);
+                        } else {
+                            ctx.movement.stepWait(pool);
+                            APmoveRandom();
+                        }
+                    }
+                }
                 GameObject altar = ctx.objects.select(10).id(altarID).poll();
                 if (altar.valid()) {
                     APturnTo(altar);

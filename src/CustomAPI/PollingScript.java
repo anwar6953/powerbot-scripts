@@ -98,14 +98,17 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
     public void APturnTo(GameObject obj) {
         if (new Random().nextBoolean()) {
             ctx.camera.turnTo(obj);
+            ctx.camera.pitch(r.nextInt(50)+50);
         }
     }
     public void APturnTo(Npc obj) {
         if (new Random().nextBoolean()) {
             ctx.camera.turnTo(obj);
+            ctx.camera.pitch(r.nextInt(50)+50);
         }
     }
     public void APmoveOffScreen() {
+        Condition.sleep();
         switch (random(0, 3)) {
             case 0: // To Top
                 ctx.input.move(random(0, ctx.game.dimensions().getWidth()-1),0);
@@ -126,6 +129,7 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
     }
 
     public void APmoveRandom() {
+        Condition.sleep();
         switch (random(0, 5)) {
             case 0: // To Top right
                 ctx.input.move(
