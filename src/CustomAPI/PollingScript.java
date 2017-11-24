@@ -24,24 +24,18 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
         return getRuntime() - startTime;
     }
 
-    public void closeBank() {
-        i = r.nextInt(100);
-        if (ctx.bank.opened()) {
-            if (i%9 == 0) ctx.bank.close();
-            else ctx.input.send("{VK_ESCAPE}");
-            Condition.wait(() -> !ctx.bank.opened(), 500, 4);
+
+
+    public void depositInventory() {
+        if (ctx.bank.depositInventory()) {
+            Condition.wait(() -> ctx.inventory.select().count() == 0,500,6);
+            if (ctx.inventory.select().count() != 0) depositInventory();
         }
     }
-    
 
-    public boolean makeXall() {
-        i = r.nextInt(100);
-        int s = 0;
-        if (i%9 == 0) s = 66;
-        else if (i%7 == 0) s = 55;
-        else if (i%6 == 0) s = 55;
-        else s = 33;
-        return ctx.chat.sendInput(s);
+    public boolean isRunning() {
+        Condition.sleep(500);
+        return ctx.widgets.component(160,24).textureId() == 1065;
     }
 
     public boolean checkAllSelected() {
@@ -49,6 +43,30 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
             return ctx.widgets.component(ID.WIDGET_MAKE,12).textureId() == -1;
         }
         return false;
+    }
+
+
+    public void waiterBoy(long startTime) {
+        Condition.sleep(1000);
+        long runTime = realRuntime(startTime);
+        int s = (int)Math.floor(realRuntime(startTime)/1000 % 60);
+        int m = (int)Math.floor(realRuntime(startTime)/60000 % 60);
+        int h = (int)Math.floor(realRuntime(startTime)/3600000);
+        if (m < 30) {
+            Condition.sleep(5000);
+        } else if (h >= 1) {
+            Condition.sleep(10000);
+        }
+    }
+
+    // ANTI PATTERN
+    public void closeBank() {
+        i = r.nextInt(100);
+        if (ctx.bank.opened()) {
+            if (i%9 == 0) ctx.bank.close();
+            else ctx.input.send("{VK_ESCAPE}");
+            Condition.wait(() -> !ctx.bank.opened(), 500, 4);
+        }
     }
 
     public void openNearbyBank() {
@@ -77,28 +95,37 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
         }
     }
 
-    public void depositInventory() {
-        if (ctx.bank.depositInventory()) {
-            Condition.wait(() -> ctx.inventory.select().count() == 0,500,6);
-            if (ctx.inventory.select().count() != 0) depositInventory();
+    public void APturnTo(GameObject obj) {
+        if (new Random().nextBoolean()) {
+            ctx.camera.turnTo(obj);
         }
     }
-
-    public boolean isRunning() {
-        Condition.sleep(500);
-        return ctx.widgets.component(160,24).textureId() == 1065;
-    }
-
-    public void waiterBoy(long startTime) {
-        Condition.sleep(1000);
-        long runTime = realRuntime(startTime);
-        int s = (int)Math.floor(realRuntime(startTime)/1000 % 60);
-        int m = (int)Math.floor(realRuntime(startTime)/60000 % 60);
-        int h = (int)Math.floor(realRuntime(startTime)/3600000);
-        if (m < 30) {
-            Condition.sleep(5000);
-        } else if (h >= 1) {
-            Condition.sleep(10000);
+    public void APturnTo(Npc obj) {
+        if (new Random().nextBoolean()) {
+            ctx.camera.turnTo(obj);
         }
     }
+//    public void moveOffScreen() {
+//        switch (random(0, 3)) {
+//            case 0: // To Top
+//                ctx.input.move(random(0, Game.getDimensions().getWidth()-1), 0);
+//                break;
+//            case 1: // To Bottom
+//                ctx.input.move(random(0, Game.getDimensions().getWidth()-1),
+//                        (int) (Game.getDimensions().getHeight()-1));
+//                break;
+//            case 2: // To Left
+//                ctx.input.move(0,
+//                        random(0, Game.getDimensions().getHeight()-1));
+//                break;
+//            case 3: // To Right
+//                ctx.input.move((int) (),
+//                        random(0, Game.getDimensions().getHeight()-1));
+//                break;
+//        }
+//    }
+//
+//    private static int random(double a, double b){
+//        return (int) Random.nextDouble(a, b+1);
+//    }
 }

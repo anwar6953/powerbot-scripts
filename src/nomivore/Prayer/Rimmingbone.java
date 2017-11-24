@@ -39,7 +39,7 @@ public class Rimmingbone extends PollingScript<ClientContext> implements PaintLi
     public void start() {
         startTime = getRuntime();
         startExp = ctx.skills.experience(skill);
-        notedBoneID = ctx.inventory.select().name(Pattern.compile("(.*bones.*)")).select().poll().id();
+        notedBoneID = ctx.inventory.select().name(Pattern.compile("(.*bones.*)")).poll().id();
         boneID = notedBoneID-1;
         reqItems = new int[] {boneID, notedBoneID,995};
         level = ctx.skills.realLevel(skill);
@@ -73,56 +73,68 @@ public class Rimmingbone extends PollingScript<ClientContext> implements PaintLi
             case TOALTAR:
                 //enter house in build mode, then walk to bookcase location
                 GameObject rimPortal = ctx.objects.select(10).id(rimPortalID).poll();
-                if (!rimPortal.inViewport() && rimPortal.valid()) {
-                    ctx.movement.step(rimPortal);
-                    Condition.wait(()->ctx.players.local().inMotion(),500,5);
-                    Condition.wait(()->!ctx.players.local().inMotion());
-                } else if (rimPortal.inViewport() && rimPortal.valid()) {
-                    rimPortal.interact("Friend's house", "Portal");
-                    Condition.sleep(700);
-                    ctx.input.send("{VK_ENTER}");
-                    Condition.wait(()->!ctx.objects.select(5).id(housePortalID).isEmpty());
+                if (rimPortal.valid()) {
+                    APturnTo(rimPortal);
+                    if (!rimPortal.inViewport()) {
+                        ctx.movement.step(rimPortal);
+                        Condition.wait(() -> ctx.players.local().inMotion(), 500, 5);
+                        Condition.wait(() -> !ctx.players.local().inMotion());
+                    } else if (rimPortal.inViewport()) {
+                        rimPortal.interact("Friend's house", "Portal");
+                        Condition.sleep(700);
+                        ctx.input.send("{VK_ENTER}");
+                        Condition.wait(() -> !ctx.objects.select(5).id(housePortalID).isEmpty());
+                    }
                 }
                 break;
             case OFFERING:
-                //check if bookcase made or not, then do action
+                //check if altar, use bones on altar
                 GameObject altar = ctx.objects.select(10).id(altarID).poll();
-                if (altar.valid() && altar.inViewport()) {
-                    Item bones = ctx.inventory.select().id(boneID).poll();
-                    if (bones.interact("Use") && altar.interact("Use", "Altar")) {
-                        Condition.wait(()->ctx.chat.canContinue() || ctx.inventory.select().id(boneID).isEmpty(), 1000, 60);
-                        level = ctx.skills.realLevel(skill);
+                if (altar.valid()) {
+                    APturnTo(altar);
+                    if (altar.inViewport()) {
+                        Item bones = ctx.inventory.select().id(boneID).poll();
+                        if (bones.interact("Use") && altar.interact("Use", "Altar")) {
+                            Condition.wait(() -> ctx.chat.canContinue() || ctx.inventory.select().id(boneID).isEmpty(), 10000, 6);
+                            level = ctx.skills.realLevel(skill);
+                        }
+                    } else {
+                        ctx.movement.stepWait(altar);
                     }
-                } else {
-                    ctx.movement.stepWait(altar);
                 }
                 break;
             case TOPHILES:
                 //not enough normal planks, exit via portal then use noted planks on philes
                 if (ctx.inventory.select().id(notedBoneID).isEmpty()) ctx.controller.stop();
                 GameObject portal = ctx.objects.select(10).id(housePortalID).poll();
-                if (!portal.inViewport() && portal.valid()) {
-                    ctx.movement.step(portal);
-                    Condition.wait(()->ctx.players.local().inMotion(),500,5);
-                    Condition.wait(()->!ctx.players.local().inMotion());
-                } else if (portal.inViewport() && portal.valid()) {
-                    portal.interact("Enter", "Portal");
-                    Condition.wait(()->!ctx.objects.select(5).id(rimPortalID).isEmpty());
+                if (portal.valid()) {
+                    APturnTo(portal);
+                    if (!portal.inViewport()) {
+                        ctx.movement.step(portal);
+                        Condition.wait(() -> ctx.players.local().inMotion(), 500, 5);
+                        Condition.wait(() -> !ctx.players.local().inMotion());
+                    } else if (portal.inViewport()) {
+                        portal.interact("Enter", "Portal");
+                        Condition.wait(() -> !ctx.objects.select(5).id(rimPortalID).isEmpty());
+                    }
                 }
                 Npc philly = ctx.npcs.select().name(npcName).poll();
-                if (!philly.inViewport() && philly.valid()) {
-                    ctx.movement.step(philly);
-                    Condition.wait(()->ctx.players.local().inMotion(),500,5);
-                    Condition.wait(()->!ctx.players.local().inMotion());
-                } else if (philly.inViewport() && philly.valid() && !ctx.inventory.select().id(notedBoneID).isEmpty()) {
-                    ctx.inventory.deselectItem();
-                    Item noted = ctx.inventory.select().id(notedBoneID).poll();
-                    noted.interact("Use");
-                    philly.interact("Use", npcName);
-                    Condition.wait(ctx.chat::chatting,500,5);
-                    if (ctx.chat.chatting()) {
-                        ctx.input.send("3");
-                        Condition.wait(()->!ctx.chat.chatting(),500,5);
+                if (philly.valid()) {
+                    APturnTo(philly);
+                    if (!philly.inViewport() && philly.valid()) {
+                        ctx.movement.step(philly);
+                        Condition.wait(() -> ctx.players.local().inMotion(), 500, 5);
+                        Condition.wait(() -> !ctx.players.local().inMotion());
+                    } else if (philly.inViewport() && philly.valid() && !ctx.inventory.select().id(notedBoneID).isEmpty()) {
+                        ctx.inventory.deselectItem();
+                        Item noted = ctx.inventory.select().id(notedBoneID).poll();
+                        noted.interact("Use");
+                        philly.interact("Use", npcName);
+                        Condition.wait(ctx.chat::chatting, 500, 5);
+                        if (ctx.chat.chatting()) {
+                            ctx.input.send("3");
+                            Condition.wait(() -> !ctx.chat.chatting(), 500, 5);
+                        }
                     }
                 }
                 break;
