@@ -1,11 +1,11 @@
-package CustomAPI;
+package api;
 
-import CustomAPI.ClientContext.*;
+import api.ClientContext.*;
 
 import java.util.List;
 import java.util.Random;
 
-import static CustomAPI.ClientContext.invalidItemID;
+import static api.ClientContext.invalidItemID;
 
 public class Bank extends org.powerbot.script.rt4.Bank {
 

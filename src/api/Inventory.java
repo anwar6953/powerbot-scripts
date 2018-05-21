@@ -1,11 +1,11 @@
-package CustomAPI;
+package api;
 
 import java.util.List;
 import java.util.Random;
-import CustomAPI.ClientContext.*;
+import api.ClientContext.*;
 import org.powerbot.script.rt4.Item;
 
-import static CustomAPI.ClientContext.invalidItemID;
+import static api.ClientContext.invalidItemID;
 
 public class Inventory extends org.powerbot.script.rt4.Inventory {
 

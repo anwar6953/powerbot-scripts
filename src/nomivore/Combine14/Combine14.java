@@ -1,8 +1,8 @@
 package nomivore.Combine14;
 
-import CustomAPI.Bank;
-import CustomAPI.ClientContext;
-import CustomAPI.PollingScript;
+import api.Bank;
+import api.ClientContext;
+import api.PollingScript;
 
 import org.powerbot.script.*;
 import org.powerbot.script.rt4.Game;

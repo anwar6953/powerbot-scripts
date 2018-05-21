@@ -1,4 +1,4 @@
-package CustomAPI;
+package api;
 
 public class Players extends org.powerbot.script.rt4.Players {
 

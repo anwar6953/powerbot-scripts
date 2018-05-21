@@ -1,4 +1,4 @@
-package CustomAPI;
+package api;
 
 import org.powerbot.script.rt4.*;
 

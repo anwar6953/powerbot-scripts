@@ -1,13 +1,10 @@
-package CustomAPI;
+package api;
 
 import nomivore.ID;
 import org.powerbot.script.Condition;
-import org.powerbot.script.PaintListener;
 import org.powerbot.script.rt4.*;
-import org.powerbot.script.rt4.Component;
 
 import java.util.Random;
-import java.util.concurrent.Callable;
 
 public abstract class PollingScript<C extends ClientContext> extends org.powerbot.script.PollingScript<ClientContext> {
     private Random r = new Random();

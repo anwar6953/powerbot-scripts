@@ -1,4 +1,4 @@
-package CustomAPI;
+package api;
 
 
 public class Skills extends org.powerbot.script.rt4.Skills {

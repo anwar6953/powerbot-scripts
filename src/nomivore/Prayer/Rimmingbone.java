@@ -1,7 +1,7 @@
 package nomivore.Prayer;
 
-import CustomAPI.ClientContext;
-import CustomAPI.PollingScript;
+import api.ClientContext;
+import api.PollingScript;
 import org.powerbot.script.*;
 import org.powerbot.script.rt4.*;
 

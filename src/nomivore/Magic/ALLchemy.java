@@ -1,14 +1,13 @@
 package nomivore.Magic;
 
-import CustomAPI.Bank;
-import CustomAPI.ClientContext;
-import CustomAPI.PollingScript;
+import api.Bank;
+import api.ClientContext;
+import api.PollingScript;
 
 import org.powerbot.script.*;
 
 import java.awt.*;
 import java.util.Random;
-import java.util.concurrent.Callable;
 
 import org.powerbot.script.rt4.Constants;
 import org.powerbot.script.rt4.Component;

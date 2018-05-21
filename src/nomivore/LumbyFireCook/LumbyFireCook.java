@@ -1,8 +1,8 @@
 package nomivore.LumbyFireCook;
 
-import CustomAPI.Bank;
-import CustomAPI.ClientContext;
-import CustomAPI.PollingScript;
+import api.Bank;
+import api.ClientContext;
+import api.PollingScript;
 import nomivore.ID;
 import org.powerbot.script.*;
 import org.powerbot.script.rt4.*;
@@ -11,8 +11,6 @@ import org.powerbot.script.rt4.Component;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import nomivore.LumbyFireCook.LumbyFireCookGUI;
 
 @Script.Manifest(
         name = "LumbyFireCook", properties = "author=nomivore; topic=1338085; client=4;",

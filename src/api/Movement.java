@@ -1,6 +1,5 @@
-package CustomAPI;
+package api;
 
-import org.powerbot.bot.rt4.client.Tile;
 import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.GameObject;
 
