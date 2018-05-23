@@ -1,8 +1,12 @@
 package api;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Random;
 import api.ClientContext.*;
+import org.powerbot.script.Condition;
+import org.powerbot.script.rt4.Component;
+import org.powerbot.script.rt4.Game;
 import org.powerbot.script.rt4.Item;
 
 import static api.ClientContext.invalidItemID;
@@ -26,11 +30,37 @@ public class Inventory extends org.powerbot.script.rt4.Inventory {
         else return pattern1;
     }
 
+    public void shiftDrop(int... dropIDs) {
+        shiftDrop("Drop",dropIDs);
+    }
+
+    public void shiftDrop(String dropString, int... dropIDs) {
+        ctx.game.tab(Game.Tab.INVENTORY);
+        Item[] inven = ctx.inventory.items();
+        if (ctx.inventory.selectedItem().valid())
+            ctx.inventory.selectedItem().interact("Cancel");
+        for (int index : pattern()) {
+            for (int ID : dropIDs) {
+                if (inven[index].id() == ID || ID == -1) {
+                    if (ctx.varpbits.varpbit(1055,17,1) == 1) {
+                        ctx.input.send("{VK_SHIFT down}");
+                        inven[index].click(true);
+                        ctx.input.send("{VK_SHIFT up}");
+                    } else {
+                        inven[index].interact(dropString);
+                    }
+                    break;
+                }
+            }
+        }
+        ctx.input.send("{VK_SHIFT up}");
+    }
+
     public void deselectItem() {
         if (ctx.inventory.selectedItem().valid()) ctx.inventory.selectedItem().interact("Cancel");
     }
 
-    public boolean hasAll(int[] itemIDs) {
+    public boolean hasAll(int... itemIDs) {
         for (int i : itemIDs) {
             if (ctx.inventory.select().id(i).isEmpty()) {
                 return false;
@@ -41,28 +71,17 @@ public class Inventory extends org.powerbot.script.rt4.Inventory {
 
     public int selectID(int[] ids) {
         for (int selectResource : ids) {
-            if (ctx.inventory.select().id(selectResource).count(true) > 0) {
+            if (!ctx.inventory.select().id(selectResource).isEmpty()) {
                 return selectResource;
             }
         }
         return invalidItemID;
     }
 
-    public int selectID(List<itemSkillPair> pairs, int skill) {
-        int level = ctx.skills.realLevel(skill);
-        for (itemSkillPair isp : pairs) {
-            if (ctx.inventory.select().id(isp.ID).count(true) > 0 &&
-                    level >= isp.level) {
-                return isp.ID;
-            }
-        }
-        return invalidItemID;
-    }
-
-    public Item lastItem(int ID) {
+    public Item lastItem(int id) {
         Item last = nil();
         for (Item it : ctx.inventory.items()) {
-            if (it.id()==ID && it.valid()) last = it;
+            if (it.id()==id && it.valid()) last = it;
         }
         return last;
     }
@@ -77,25 +96,36 @@ public class Inventory extends org.powerbot.script.rt4.Inventory {
         return last;
     }
 
-    public Item firstLeft(int ID) {
+    public Item firstLeft(int id) {
         int[] left = {0,4,8,12,16,20,24};
-        Item[] inven = ctx.inventory.items();
-        for (int index : left) {
-            if (inven[index].id()==ID && inven[index].valid()) return inven[index];
-        }
-        return ctx.inventory.select().id(ID).poll();
+        return selectIndexes(id,left);
     }
 
-    public Item lastLeft(int ID) {
-        int[] left = {0,4,8,12,16,20,24};
-        Item[] inven = ctx.inventory.items();
-        Item leItem = ctx.inventory.select().id(ID).poll();
-        for (int index : left) {
-            if (inven[index].id()==ID && inven[index].valid()) leItem = inven[index];
-        }
-        return leItem;
+    public Item lastLeft(int id) {
+        int[] lastLeft = {24,20,16,12,8,4,0};
+        return selectIndexes(id,lastLeft);
     }
 
-//    public void dragItemTo(Item it, int index) {
-//    }
+    public Item selectIndexes(int id, int... indexes) {
+        Item[] inven = ctx.inventory.items();
+        for (int index : indexes) {
+            if (inven[index].id()==id && inven[index].valid()) return inven[index];
+        }
+        return ctx.inventory.select().id(id).poll();
+    }
+
+    public void dragItemTo(Item it, int index) {
+        it.hover();
+        Component c = ctx.widgets.component(149,0);
+        int x = 16+index%4*42;
+        int y = 15+index/4*33;
+        Point p = new Point(c.nextPoint().x+x,c.nextPoint().y+y);
+        Condition.sleep(500);
+        ctx.input.drag(p, true);
+    }
+    public void dragItemTo(Item it1, Item it2) {
+        it1.hover();
+        Condition.sleep(500);
+        ctx.input.drag(it2.centerPoint(), true);
+    }
 }
