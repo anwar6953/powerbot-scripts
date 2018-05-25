@@ -26,6 +26,11 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
             case WITHDRAW:
                 if (ctx.bank.opened()) {
                     ctx.bank.depositAllExcept(curr.getRUNES());
+                    if (ctx.bank.noneLeft(curr.getJEWELLERY())
+                            || ctx.bank.noneLeft(curr.getRUNES())) {
+                        log.info("Nothing left");
+                        ctx.controller.stop();
+                    }
                     for (int i : curr.getRUNES()) {
                         ctx.bank.withdraw(i, Bank.Amount.ALL);
                     }
@@ -47,6 +52,10 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
                     if (ctx.bank.opened()) {
                         ctx.bank.depositEquipment();
                         ctx.bank.depositInventory();
+                        if (ctx.bank.noneLeft(curr.getSTAFF_ID())) {
+                            log.info("No staff");
+                            ctx.controller.stop();
+                        }
                         ctx.bank.withdraw(curr.getSTAFF_ID(),1);
                         ctx.bank.close();
                     } else {
