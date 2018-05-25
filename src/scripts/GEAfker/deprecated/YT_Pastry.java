@@ -16,8 +16,8 @@ import static java.lang.Math.min;
 public class YT_Pastry extends Task<ClientContext> {
     public YT_Pastry(ClientContext ctx) {
         super(ctx);
-        resourceID1 = ID.JUG_FULL;
-        resourceIDARRAY2 = new int[] {ID.POT_FLOUR};
+        resourceID1 = ID.JUG_OF_WATER;
+        resourceIDARRAY2 = new int[] {ID.POT_OF_FLOUR};
         resourceID2 = resourceIDARRAY2[0];
         gameMsg = "pastry dough";
         actionName = "Pastry dough made";

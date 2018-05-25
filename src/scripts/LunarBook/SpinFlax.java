@@ -1,4 +1,4 @@
-package scripts.Magic.LunarBook;
+package scripts.LunarBook;
 
 import api.Bank;
 import api.ClientContext;
@@ -7,18 +7,18 @@ import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.Component;
 import org.powerbot.script.rt4.*;
 
-import static scripts.Magic.LunarBook.LunarBook.*;
+import static scripts.LunarBook.LunarBook.expEarned;
 
 public class SpinFlax extends Task<ClientContext> {
     private final int MAGIC_WIDGET = 218,
                         SPELL_SPIN_FLAX = 142,
                         RUNE_NATURE = 561,
-                        RUNE_ASTRAL = 9075,
+                        ASTRAL_RUNE = 9075,
                         FLAX = 1779;
 
 
     private Component spinFlax = ctx.widgets.component(MAGIC_WIDGET,SPELL_SPIN_FLAX);
-    private int spellXP = 75;
+    private int spellXP = 75,productDone;
 
     private boolean activate = true;
 
@@ -42,10 +42,10 @@ public class SpinFlax extends Task<ClientContext> {
                 break;
             case WITHDRAW:
                 if (ctx.bank.opened()) {
-                    ctx.bank.depositAllExcept(FLAX,RUNE_NATURE,RUNE_ASTRAL);
+                    ctx.bank.depositAllExcept(FLAX,RUNE_NATURE,ASTRAL_RUNE);
                     countResources();
                     ctx.bank.withdrawUntil(FLAX, 25);
-                    ctx.bank.withdrawUntil(RUNE_ASTRAL, Bank.Amount.ALL.getValue());
+                    ctx.bank.withdrawUntil(ASTRAL_RUNE, Bank.Amount.ALL.getValue());
                     ctx.bank.withdrawUntil(RUNE_NATURE, Bank.Amount.ALL.getValue());
                     ctx.bank.close();
                 } else {
@@ -81,13 +81,13 @@ public class SpinFlax extends Task<ClientContext> {
 
     private boolean hasReqs() {
         return !ctx.inventory.select().id(FLAX).isEmpty() &&
-                !ctx.inventory.select().id(RUNE_ASTRAL).isEmpty() &&
+                !ctx.inventory.select().id(ASTRAL_RUNE).isEmpty() &&
                 ctx.inventory.select().id(RUNE_NATURE).count(true) >= 2;
     }
 
     private void countResources() {
         if ( (ctx.bank.select().id(FLAX).isEmpty() && ctx.inventory.select().id(FLAX).isEmpty()) ||
-                (ctx.bank.select().id(RUNE_ASTRAL).isEmpty() && ctx.inventory.select().id(RUNE_ASTRAL).isEmpty()) ||
+                (ctx.bank.select().id(ASTRAL_RUNE).isEmpty() && ctx.inventory.select().id(ASTRAL_RUNE).isEmpty()) ||
                 (ctx.bank.select().id(RUNE_NATURE).count(true) < 2 && ctx.inventory.select().id(RUNE_NATURE).count(true) < 2) )
             activate = false;
     }

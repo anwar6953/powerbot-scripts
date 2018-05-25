@@ -12,14 +12,25 @@ import scripts.ID;
 import static java.lang.Math.min;
 
 public class FlaxSpin extends Task<ClientContext> {
-    private int resourceID3 = ID.RUNE_NATURE;
+    private int resourceID3 = ID.NATURE_RUNE;
     private int resourceLeft3 = 2;
     private int initial;
+    public static final int MAGIC_WIDGET = 218,
+            ENCHANT_BOLT_SPELL = 4,
+            ENCHANT_SAPPHIRE_SPELL = 6,
+            ENCHANT_BOLT_WIDGET = 80,
+            ENCHANT_RUBY_BOLT = 8,
+            ENCHANT_RUBY_SPELL = 29,
+            ENCHANT_DIAMOND_SPELL = 37,
+            SPELL_SPIN_FLAX = 138,
+            WIDGET_MAKE = 270,
+            COMPONENT_MAKE = 14,
+            SPELL_HIGH_ALCH = 35;
 
     public FlaxSpin(ClientContext ctx) {
         super(ctx);
         resourceID1 = ID.FLAX;
-        resourceID2 = ID.RUNE_ASTRAL;
+        resourceID2 = ID.ASTRAL_RUNE;
         actionName = "Flax spun";
         taskName = "Spin flax";
     }
@@ -93,8 +104,8 @@ public class FlaxSpin extends Task<ClientContext> {
     private void action() {
         Utils.closeBank();
         if (ctx.chat.canContinue()) ctx.chat.clickContinue();
-        if (!ctx.widgets.component(ID.MAGIC_WIDGET, ID.SPELL_SPIN_FLAX).visible()) ctx.input.send("{VK_F6}");
-        if (ctx.widgets.component(ID.MAGIC_WIDGET, ID.SPELL_SPIN_FLAX).click()) {
+        if (!ctx.widgets.component(MAGIC_WIDGET, SPELL_SPIN_FLAX).visible()) ctx.input.send("{VK_F6}");
+        if (ctx.widgets.component(MAGIC_WIDGET, SPELL_SPIN_FLAX).click()) {
             Condition.wait(() -> ctx.players.local().animation() != -1, 300, 8);
             Condition.wait(() -> ctx.players.local().animation() == -1, 300, 8);
         }

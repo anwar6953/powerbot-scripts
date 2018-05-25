@@ -14,7 +14,7 @@ import static java.lang.Math.min;
 public class YT_AnchovyPizza extends Task<ClientContext> {
     public YT_AnchovyPizza(ClientContext ctx) {
         super(ctx);
-        resourceID1 = ID.PIZZA_PLAIN;
+        resourceID1 = ID.PLAIN_PIZZA;
         resourceIDARRAY2 = new int[] {2118};
         resourceID2 = resourceIDARRAY2[0];
         gameMsg = "You add";

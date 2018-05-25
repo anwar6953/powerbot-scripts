@@ -21,9 +21,9 @@ public class GemCutter extends Task<ClientContext> {
     private static int productDone;
 
     private static int resourceID1;
-    private static int[] resourceIDARRAY1 = {ID.JADEUNCUT, ID.RUBYUNCUT};
+    private static int[] resourceIDARRAY1 = {ID.UNCUT_JADE, ID.UNCUT_RUBY};
     private static int toolID = ID.CHISEL;
-    private static int productID = ID.JADECUT;
+    private static int productID = ID.UNCUT_JADE;
 
     private static GeItem resourceGE1;
     private static GeItem productGE;

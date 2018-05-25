@@ -16,8 +16,8 @@ import static java.lang.Math.min;
 public class PotionMake extends Task<ClientContext> {
     public PotionMake(ClientContext ctx) {
         super(ctx);
-        resourceID1 = ID.UNF_IRIT;
-        resourceIDARRAY2 = new int[] {ID.UNICORNHORNDUST};
+        resourceID1 = ID.IRIT_POTION_UNF;
+        resourceIDARRAY2 = new int[] {ID.UNICORN_HORN_DUST};
         resourceID2 = resourceIDARRAY2[0];
         gameMsg = "your potion";
         actionName = "Potions made";

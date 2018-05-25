@@ -13,7 +13,7 @@ public class BoltEnchanter extends Task<ClientContext> {
     private int staffID = ID.STAFF_FIRE;
     public BoltEnchanter(ClientContext ctx) {
         super(ctx);
-        resourceID1 = ID.RUBYBOLT;
+        resourceID1 = ID.RUBY_BOLTS;
         resourceIDARRAY2 = new int[] {ID.RUNE_BLOOD, ID.RUNE_COSMIC};
         gameMsg = "magic of the runes";
         actionName = "Bolts enchanted";

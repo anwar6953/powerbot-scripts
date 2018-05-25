@@ -13,7 +13,7 @@ import javax.swing.*;
 @Script.Manifest(name = "SarimSeagulls", properties = "author=nomivore; topic=1338000; client=4;", description = "Attacks seagulls, banks/buries bones")
 public class SarimSeagulls extends PollingScript<ClientContext> implements PaintListener, MessageListener {
 
-    private final int[] npcs = ID.SEAGULL;
+    private final int[] npcs = new int[]{123,123};
     private final int loot = ID.BONES;
     private final int depositBoxID = 26254;
     private final Tile destTile = new Tile(3028,3235);

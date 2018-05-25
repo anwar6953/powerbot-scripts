@@ -17,7 +17,7 @@ public class Composter extends Task<ClientContext> {
     public Composter(ClientContext ctx) {
         super(ctx);
         resourceID1 = ID.COMPOST;
-        resourceIDARRAY2 = ID.COMPOSTPOTIONS;
+        resourceIDARRAY2 = new int[]{ID.COMPOST_POTION_1,ID.COMPOST_POTION_2,ID.COMPOST_POTION_3,ID.COMPOST_POTION_4};
         gameMsg = "The compost transforms";
         actionName = "Compost made";
         taskName = "Make compost";
@@ -27,7 +27,7 @@ public class Composter extends Task<ClientContext> {
     public void initialise() {
         ctx.bank.openNearbyBank();
         if (ctx.bank.opened()) {
-            resourceLeft2 = ctx.bank.select().id(ID.COMPOSTPOTION4).count(true);
+            resourceLeft2 = ctx.bank.select().id(ID.COMPOST_POTION_4).count(true);
             resourceLeft1 = ctx.bank.select().id(ID.COMPOST).count(true);
             if (limit > min(resourceLeft1, resourceLeft2 *4) || limit == 0) limit = min(resourceLeft1, resourceLeft2 *4);
         }
@@ -66,9 +66,9 @@ public class Composter extends Task<ClientContext> {
     private void prologue() {
         if (ctx.bank.opened()) {
             Utils.depositInventory();
-            resourceLeft2 = ctx.bank.select().id(ID.COMPOSTPOTION4).count(true);
+            resourceLeft2 = ctx.bank.select().id(ID.COMPOST_POTION_4).count(true);
             resourceLeft1 = ctx.bank.select().id(resourceID1).count(true);
-            ctx.bank.withdraw(ID.COMPOSTPOTION4, 5);
+            ctx.bank.withdraw(ID.COMPOST_POTION_4, 5);
             ctx.bank.withdraw(resourceID1, 20);
             Utils.closeBank();
         } else {

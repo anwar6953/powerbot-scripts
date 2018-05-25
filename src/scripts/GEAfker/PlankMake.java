@@ -23,7 +23,7 @@ public class PlankMake extends Task<ClientContext> {
     public PlankMake(ClientContext ctx) {
         super(ctx);
         resourceID1 = 6332;
-        resourceID2 = ID.RUNE_ASTRAL;
+        resourceID2 = ID.ASTRAL_RUNE;
         actionName = "Planks";
         taskName = "Planks";
     }

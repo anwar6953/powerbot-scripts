@@ -12,8 +12,8 @@ import static java.lang.Math.min;
 public class BoltTipper extends Task<ClientContext> {
     public BoltTipper(ClientContext ctx) {
         super(ctx);
-        resourceID1 = ID.BOLTADAMANT;
-        resourceIDARRAY2 = new int[] {ID.BOLTTIPDIAMOND,ID.BOLTTIPRUBY};
+        resourceID1 = ID.ADAMANT_BOLTS;
+        resourceIDARRAY2 = new int[] {ID.DIAMOND_BOLT_TIPS,ID.RUBY_BOLT_TIPS};
         gameMsg = "You fletch";
         actionName = "Bolts tipped";
         taskName = "Tip bolts";

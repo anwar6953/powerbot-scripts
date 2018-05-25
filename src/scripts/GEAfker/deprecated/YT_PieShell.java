@@ -22,7 +22,7 @@ public class YT_PieShell extends Task<ClientContext> {
     public YT_PieShell(ClientContext ctx) {
         super(ctx);
         resourceID1 = ID.PIE_DISH;
-        resourceIDARRAY2 = new int[] {ID.DOUGH_PASTRY};
+        resourceIDARRAY2 = new int[] {ID.PASTRY_DOUGH};
         resourceID2 = resourceIDARRAY2[0];
         gameMsg = "pie shell";
         actionName = "Dishes shelled";

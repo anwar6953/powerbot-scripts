@@ -13,12 +13,17 @@ import static java.lang.Math.min;
 
 public class Humidify extends Task<ClientContext> {
     private int initial;
+    private final int MAGIC_WIDGET = 218,
+            SPELL_SPIN_FLAX = 142,
+            RUNE_NATURE = 561,
+            ASTRAL_RUNE = 9075,
+            FLAX = 1779;
     int staffID = 11787;
 
     public Humidify(ClientContext ctx) {
         super(ctx);
         resourceID1 = 434;
-        resourceID2 = ID.RUNE_ASTRAL;
+        resourceID2 = ID.ASTRAL_RUNE;
         actionName = "Clay moistened";
         taskName = "Soften clay";
     }
@@ -84,8 +89,8 @@ public class Humidify extends Task<ClientContext> {
         Utils.closeBank();
         equipStaff();
         if (ctx.chat.canContinue()) ctx.chat.clickContinue();
-        if (!ctx.widgets.component(ID.MAGIC_WIDGET, 101).visible()) ctx.input.send("{VK_F6}");
-        if (ctx.widgets.component(ID.MAGIC_WIDGET, 101).click()) {
+        if (!ctx.widgets.component(MAGIC_WIDGET, 101).visible()) ctx.input.send("{VK_F6}");
+        if (ctx.widgets.component(MAGIC_WIDGET, 101).click()) {
             ctx.bank.hover(ctx);
             Condition.wait(() -> ctx.inventory.select().id(resourceID1).isEmpty(), 500, 8);
         }

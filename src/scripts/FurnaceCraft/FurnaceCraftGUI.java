@@ -126,11 +126,11 @@ public class FurnaceCraftGUI extends JFrame {
 
 
     private enum GEM {
-        SAPPHIRE(ID.GEM_SAPPHIRE_CUT,1),
-        EMERALD(ID.GEM_EMERALD_CUT,2),
-        RUBY(ID.GEM_RUBY_CUT,3),
-        DIAMOND(ID.GEM_DIAMOND_CUT,4),
-        DRAGONSTONE(ID.GEM_DRAGONSTONE_CUT,5);
+        SAPPHIRE(ID.SAPPHIRE,1),
+        EMERALD(ID.EMERALD,2),
+        RUBY(ID.RUBY,3),
+        DIAMOND(ID.DIAMOND,4),
+        DRAGONSTONE(ID.DRAGONSTONE,5);
 
         private int id;
         private int offset;
@@ -142,11 +142,18 @@ public class FurnaceCraftGUI extends JFrame {
 
     }
 
+    public static int
+            CRAFT_RING_BASE = 7,
+            CRAFT_NECKLACE_BASE = 21,
+            CRAFT_AMULET_BASE = 34,
+            CRAFT_BRACELET_BASE = 47,
+            CRAFT_SAPPHIRE_NECKLACE = 22;
+
     private enum JEWELLERY {
-        RING(ID.CRAFT_RING_BASE,ID.MOULD_RING),
-        AMULET(ID.CRAFT_AMULET_BASE,ID.MOULD_AMULET),
-        NECKLACE(ID.CRAFT_NECKLACE_BASE,ID.MOULD_NECKLACE),
-        BRACELET(ID.CRAFT_BRACELET_BASE,ID.MOULD_BRACELET);
+        RING(CRAFT_RING_BASE,ID.RING_MOULD),
+        AMULET(CRAFT_AMULET_BASE,ID.AMULET_MOULD),
+        NECKLACE(CRAFT_NECKLACE_BASE,ID.NECKLACE_MOULD),
+        BRACELET(CRAFT_BRACELET_BASE,ID.BRACELET_MOULD);
 
         private int type;
         private int toolID;

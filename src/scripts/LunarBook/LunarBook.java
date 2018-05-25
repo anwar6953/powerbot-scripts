@@ -1,4 +1,4 @@
-package scripts.Magic.LunarBook;
+package scripts.LunarBook;
 
 import api.ClientContext;
 import api.PollingScript;

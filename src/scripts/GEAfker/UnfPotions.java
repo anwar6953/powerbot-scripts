@@ -29,7 +29,7 @@ public class UnfPotions extends Task<ClientContext> {
                 TOADFLAX = 2998,
                 SNAPDRAGON = 3000,
                 LANTADYME = 2481;
-        resourceID1 = ID.VIAL_WATER;
+        resourceID1 = ID.VIAL_OF_WATER;
         resourceIDARRAY2 = new int[] {
                 GUAM, MARRENTILL,TARROMIN,HARRALANDER,RANARR,
                 IRIT,AVANTOE,KWUARM, CADANTINE, DWARF,

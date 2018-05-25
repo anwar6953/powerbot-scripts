@@ -16,7 +16,7 @@ public class DartFletch extends Task<ClientContext> {
     public DartFletch(ClientContext ctx) {
         super(ctx);
         resourceID1 = ID.FEATHER;
-        resourceIDARRAY2 = new int[] {ID.DARTTIP_MITHRIL};
+        resourceIDARRAY2 = new int[] {ID.MITHRIL_DART_TIP};
         gameMsg = "You finish";
         actionName = "Darts fletched";
         taskName = "Fletch darts";

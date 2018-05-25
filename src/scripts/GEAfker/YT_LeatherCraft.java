@@ -18,7 +18,7 @@ public class YT_LeatherCraft extends Task<ClientContext> {
         super(ctx);
         level = ctx.skills.level(Constants.SKILLS_CRAFTING);
         resourceID1 = ID.THREAD;
-        resourceID2 = ID.LEATHER_SOFT;
+        resourceID2 = ID.LEATHER;
         gameMsg = "make";
         actionName = "Leather crafted";
         taskName = "YT_CraftLeather";
@@ -87,21 +87,21 @@ public class YT_LeatherCraft extends Task<ClientContext> {
         final Item tool = ctx.inventory.select().id(toolID).poll();
         final Item item = ctx.inventory.select().id(resourceID2).poll();
         if (tool.interact("Use") && item.interact("Use")) {
-            Condition.wait(() -> ctx.widgets.component(ID.WIDGET_CRAFT_LEATHER,0).visible(), 250, 5);
+//            Condition.wait(() -> ctx.widgets.component(ID.WIDGET_CRAFT_LEATHER,0).visible(), 250, 5);
         }
-        ctx.widgets.component(ID.WIDGET_CRAFT_LEATHER, itemChoose(level)).interact("Make all");
+//        ctx.widgets.component(ID.WIDGET_CRAFT_LEATHER, itemChoose(level)).interact("Make all");
         Condition.wait(() -> temp != productDone, 500, 5);
         Condition.wait(() -> ctx.inventory.select().id(resourceID1).count() == 0 || ctx.inventory.select().id(resourceID2).count() == 0 || ctx.chat.canContinue(), 500, 60);
     }
 
     private int itemChoose(int level) {
-        int component = ID.WIDGET_LEATHER_1;
-        if (level >= 7) component = ID.WIDGET_LEATHER_2;
-        if (level >= 9) component = ID.WIDGET_LEATHER_3;
-        if (level >= 11) component = ID.WIDGET_LEATHER_4;
-        if (level >= 14) component = ID.WIDGET_LEATHER_5;
-        if (level >= 18) component = ID.WIDGET_LEATHER_6;
-        if (level >= 38) component = ID.WIDGET_LEATHER_7;
+        int component = 1;
+        if (level >= 7) component = 2;
+        if (level >= 9) component = 3;
+        if (level >= 11) component = 4;
+        if (level >= 14) component = 5;
+        if (level >= 18) component = 6;
+        if (level >= 38) component = 7;
         return component;
     }
 

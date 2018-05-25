@@ -12,6 +12,7 @@ import static java.lang.Math.min;
 import static org.powerbot.script.rt4.Magic.Spell.HIGH_ALCHEMY;
 
 public class HighAlch extends Task<ClientContext> {
+
     private Component highAlch = ctx.widgets.component(ID.MAGIC_WIDGET,ID.SPELL_HIGH_ALCH);
     private int skill = Constants.SKILLS_MAGIC;
     private int startExp;
