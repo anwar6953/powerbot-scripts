@@ -14,7 +14,7 @@ import javax.swing.*;
 public class SarimSeagulls extends PollingScript<ClientContext> implements PaintListener, MessageListener {
 
     private final int[] npcs = new int[]{123,123};
-    private final int loot = ID.BONES;
+    private final int loot = ID.BONES_526;
     private final int depositBoxID = 26254;
     private final Tile destTile = new Tile(3028,3235);
     private final Tile bankTile = new Tile(3045,3235);
@@ -79,7 +79,7 @@ public class SarimSeagulls extends PollingScript<ClientContext> implements Paint
                 }
                 break;
             case BURY:
-                ctx.inventory.select().id(ID.BONES).poll().interact("Bury");
+                ctx.inventory.select().id(ID.BONES_526).poll().interact("Bury");
                 Condition.sleep(1000);
                 break;
             case WAIT:
@@ -117,7 +117,7 @@ public class SarimSeagulls extends PollingScript<ClientContext> implements Paint
                 return State.BANK;
             }
         } else if (action == 2) {
-            if (ctx.inventory.select().id(ID.BONES).count() >= 1) {
+            if (ctx.inventory.select().id(ID.BONES_526).count() >= 1) {
                 state = "Burying";
                 return State.BURY;
             }

@@ -86,7 +86,7 @@ public class Combine14GUI {
 
 //        displayList.add(new IDPair(ID.DOUGH_PIZZA,ID.TOMATO,"Incomplete pizza"));
 //        displayList.add(new IDPair(ID.PIZZA_INCOMPLETE,ID.CHEESE,"Uncooked pizza"));
-        displayList.add(new IDPair(ID.JUG_OF_WATER, ID.GRAPES,14,14,"Wine maker"));
+        displayList.add(new IDPair(ID.JUG_OF_WATER_1937, ID.GRAPES_1987,14,14,"Wine maker"));
         displayList.add(new IDPair(1755,1623,1,14,"Cut sapphires"));
         displayList.add(new IDPair(227,249,14,14,"Unfinished guam potions"));
 
