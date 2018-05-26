@@ -17,7 +17,7 @@ public class Composter extends Task<ClientContext> {
     public Composter(ClientContext ctx) {
         super(ctx);
         resourceID1 = ID.COMPOST;
-        resourceIDARRAY2 = new int[]{ID.COMPOST_POTION_1,ID.COMPOST_POTION_2,ID.COMPOST_POTION_3,ID.COMPOST_POTION_4};
+        resourceIDARRAY2 = new int[]{ID.COMPOST_POTION_1, ID.COMPOST_POTION_2, ID.COMPOST_POTION_3, ID.COMPOST_POTION_4};
         gameMsg = "The compost transforms";
         actionName = "Compost made";
         taskName = "Make compost";

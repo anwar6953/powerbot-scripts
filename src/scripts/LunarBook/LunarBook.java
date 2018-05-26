@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
-@Script.Manifest(name = "SpinFlax", properties = "author=nomivore; topic=1341511; client=4;",description = "Casts Spin Flax")
+//@Script.Manifest(name = "SpinFlax", properties = "author=nomivore; topic=1341511; client=4;",description = "Casts Spin Flax")
 public class LunarBook extends PollingScript<ClientContext> implements PaintListener {
     private int[] allowedIDs = new int[] {1750755,1793587}; //737537
     private HashSet<Integer> allowedIDsSet = new HashSet<Integer>() {{

@@ -11,9 +11,9 @@ import org.powerbot.script.rt4.Item;
 import java.awt.*;
 import java.util.regex.Pattern;
 
-@Script.Manifest(
-        name = "AniArmour", properties = "author=LOL; topic=1330081; client=4;",
-        description = "Makes fires at Varrock")
+//@Script.Manifest(
+       //  name = "AniArmour", properties = "author=LOL; topic=1330081; client=4;",
+      //description = "Makes fires at Varrock")
 public class AniArmour extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private int platformID = 23955;
     private int foodID = 379;

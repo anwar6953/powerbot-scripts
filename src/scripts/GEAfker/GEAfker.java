@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Script.Manifest(
-        name = "AAAfker", properties = "author=nomivore; client=4;",
-        description = "Does various GE afk activities")
+//@Script.Manifest(
+       //  name = "AAAfker", properties = "author=nomivore; client=4;",
+      //description = "Does various GE afk activities")
 
 public class GEAfker extends PollingScript<ClientContext> implements PaintListener, MessageListener, InventoryListener
 {

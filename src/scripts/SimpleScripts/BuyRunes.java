@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-@Script.Manifest(
-        name = "BuyRunes", properties = "author=nomivore; topic=1341420; client=4;",
-        description = "Sells all ITEMS in inventory to GE or Npc")
+//@Script.Manifest(
+       //  name = "BuyRunes", properties = "author=nomivore; topic=1341420; client=4;",
+      //description = "Sells all ITEMS in inventory to GE or Npc")
 public class BuyRunes extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private Component npcStore = ctx.widgets.component(300,0);
     private Component[] runeStacks = {

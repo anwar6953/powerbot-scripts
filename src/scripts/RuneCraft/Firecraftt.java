@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
 
 //import scripts.ID;
 
-@Script.Manifest(
-        name = "YT_Firecraft", properties = "author=LOL; topic=1330081; client=4;",
-        description = "Crafts fire runes")
+//@Script.Manifest(
+       //  name = "YT_Firecraft", properties = "author=LOL; topic=1330081; client=4;",
+      //description = "Crafts fire runes")
 public class Firecraftt extends PollingScript<ClientContext> implements PaintListener, MessageListener {
 
     private static final Tile ruinTile = new Tile(3312, 3253);

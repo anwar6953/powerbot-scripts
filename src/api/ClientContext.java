@@ -17,6 +17,7 @@ public class ClientContext extends org.powerbot.script.rt4.ClientContext {
     public final Magic magic;
     public final DepositBox depositBox;
     public final Camera camera;
+    public final Components components;
 
 //    public final Components components;
 
@@ -30,6 +31,6 @@ public class ClientContext extends org.powerbot.script.rt4.ClientContext {
         this.magic = new Magic(ctx);
         this.depositBox = new DepositBox(ctx);
         this.camera = new Camera(ctx);
-//        this.components = new Components(ctx);
+        this.components = new Components(ctx);
     }
 }

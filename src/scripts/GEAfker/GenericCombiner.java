@@ -9,6 +9,7 @@ import org.powerbot.script.rt4.Component;
 import org.powerbot.script.rt4.Game;
 import org.powerbot.script.rt4.Item;
 import scripts.ID;
+
 import static java.lang.Math.min;
 
 public class GenericCombiner extends Task<ClientContext> {

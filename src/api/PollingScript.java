@@ -2,7 +2,6 @@ package api;
 
 import scripts.ID;
 import org.powerbot.script.*;
-import org.powerbot.script.rt4.*;
 import org.powerbot.script.rt4.Component;
 import org.powerbot.script.rt4.Interactive;
 
@@ -11,15 +10,11 @@ import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.*;
-import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
-import java.util.concurrent.Callable;
 
 public abstract class PollingScript<C extends ClientContext> extends org.powerbot.script.PollingScript<ClientContext> {
     protected Utils Utils;
@@ -125,7 +120,7 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
         }
 
         public boolean checkAllSelected() {
-            if (ctx.widgets.component(ID.WIDGET_MAKE,ID.COMPONENT_MAKE).visible()) {
+            if (ctx.widgets.component(ID.WIDGET_MAKE, ID.COMPONENT_MAKE).visible()) {
                 return ctx.widgets.component(ID.WIDGET_MAKE,12).textureId() == -1;
             }
             return false;

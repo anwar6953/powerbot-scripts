@@ -6,9 +6,9 @@ import org.powerbot.script.*;
 
 import java.awt.*;
 
-//@Script.Manifest(
-//        name = "BuyStuff", properties = "author=LOL; topic=1330081; client=4;",
-//        description = "Sells inventory")
+////@Script.Manifest(
+//       //  name = "BuyStuff", properties = "author=LOL; topic=1330081; client=4;",
+//      //description = "Sells inventory")
 public class BuyStuff extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private int productDone;
     private long startTime;

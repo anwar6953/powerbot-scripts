@@ -11,9 +11,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-@Script.Manifest(
-        name = "BuyFeather", properties = "author=nomivore; topic=1341420; client=4;",
-        description = "Sells all ITEMS in inventory to GE or Npc")
+//@Script.Manifest(
+       //  name = "BuyFeather", properties = "author=nomivore; topic=1341420; client=4;",
+      //description = "Sells all ITEMS in inventory to GE or Npc")
 public class BuyFeather extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private Component npcStore = ctx.widgets.component(300,0);
     private Component featherPack = ctx.widgets.component(300,16).component(9);

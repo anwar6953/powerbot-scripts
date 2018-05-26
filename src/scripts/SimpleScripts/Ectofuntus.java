@@ -9,9 +9,9 @@ import org.powerbot.script.rt4.TilePath;
 
 import java.awt.*;
 
-//@Script.Manifest(
-//        name = "Ectofuntus", properties = "author=LOL; topic=1330081; client=4;",
-//        description = "Makes fires at Varrock")
+////@Script.Manifest(
+//       //  name = "Ectofuntus", properties = "author=LOL; topic=1330081; client=4;",
+//      //description = "Makes fires at Varrock")
 public class Ectofuntus extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private int slimeID = 4286;
     private int potID = 1931;

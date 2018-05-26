@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.regex.Pattern;
 
 
-@Script.Manifest(name = "TitheFarm", properties = "author=nomivore; topic=1341279; client=4;", description = "Plays Tithe Farm. Requires Humidify, see thread for details")
+//@Script.Manifest(name = "TitheFarm", properties = "author=nomivore; topic=1341279; client=4;", description = "Plays Tithe Farm. Requires Humidify, see thread for details")
 public class TitheFarm extends PollingScript<ClientContext> {
 
     private Status Status = new Status(ctx,Utils);

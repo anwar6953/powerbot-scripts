@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
 import static java.lang.Thread.sleep;
 import static org.powerbot.script.Random.nextGaussian;
 
-@Script.Manifest(
-        name = "NMZ", properties = "author=LOL; topic=1330081; client=4;",
-        description = "NMZ")
+//@Script.Manifest(
+       //  name = "NMZ", properties = "author=LOL; topic=1330081; client=4;",
+      //description = "NMZ")
 public class NMZ extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private int level,
             startExp;

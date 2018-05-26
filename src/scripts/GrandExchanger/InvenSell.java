@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-@Script.Manifest(
-        name = "InventorySeller", properties = "author=nomivore; topic=1341420; client=4;",
-        description = "Sells all ITEMS in inventory to GE or Npc")
+//@Script.Manifest(
+       //  name = "InventorySeller", properties = "author=nomivore; topic=1341420; client=4;",
+      //description = "Sells all ITEMS in inventory to GE or Npc")
 public class InvenSell extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private Component npcStore = ctx.widgets.component(300,0);
     private long startTime;

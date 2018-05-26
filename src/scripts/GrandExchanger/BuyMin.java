@@ -7,9 +7,9 @@ import org.powerbot.script.rt4.Item;
 
 import java.awt.*;
 
-@Script.Manifest(
-        name = "BuyMin", properties = "author=LOL; topic=1330081; client=4;",
-        description = "Buys ITEMS")
+//@Script.Manifest(
+       //  name = "BuyMin", properties = "author=LOL; topic=1330081; client=4;",
+      //description = "Buys ITEMS")
 public class BuyMin extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private long startTime;
     private GrandExchange ge;

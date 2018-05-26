@@ -13,7 +13,7 @@ public class LongFletch extends Task<ClientContext> {
     public LongFletch(ClientContext ctx) {
         super(ctx);
         resourceID1 = ID.KNIFE;
-        resourceIDARRAY2 = new int[] {ID.LOGS_MAGIC,ID.LOGS_YEW, ID.MAPLE_LOGS};
+        resourceIDARRAY2 = new int[] {ID.LOGS_MAGIC, ID.LOGS_YEW, ID.MAPLE_LOGS};
         resourceID2 = resourceIDARRAY2[0];
         gameMsg = "longbow";
         actionName = "Longbows";

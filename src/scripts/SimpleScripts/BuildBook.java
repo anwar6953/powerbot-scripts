@@ -8,9 +8,9 @@ import org.powerbot.script.rt4.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-@Script.Manifest(
-        name = "BuildBook", properties = "author=LOL; topic=1330081; client=4;",
-        description = "Makes fires at Varrock")
+//@Script.Manifest(
+       //  name = "BuildBook", properties = "author=LOL; topic=1330081; client=4;",
+      //description = "Makes fires at Varrock")
 public class BuildBook extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private int spaceID = 4521;
     private String spaceName = "Chair space";

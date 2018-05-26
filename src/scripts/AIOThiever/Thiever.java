@@ -16,7 +16,7 @@ import java.io.FileWriter;
 import java.util.HashSet;
 
 
-@Script.Manifest(name = "AIOThiever", properties = "author=nomivore; topic=1341133; client=4;", description = "Thiever")
+//@Script.Manifest(name = "AIOThiever", properties = "author=nomivore; topic=1341133; client=4;", description = "Thiever")
 public class Thiever extends PollingScript<ClientContext> implements MessageListener{
     public static long startTime;
     public static int startExp,

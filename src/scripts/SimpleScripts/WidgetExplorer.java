@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-@Script.Manifest(name = "FidgetWidget", properties = "author=nomivore; topic=1342073; client=4;", description = "Helps you find widgets (Developer Tool)")
+//@Script.Manifest(name = "FidgetWidget", properties = "author=nomivore; topic=1342073; client=4;", description = "Helps you find widgets (Developer Tool)")
 public class WidgetExplorer extends PollingScript<ClientContext> implements PaintListener, MouseListener {
     private Font font = new Font("Trebuchet MS", Font.PLAIN, 20);
     private List<Component> compList = new ArrayList<>();

@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
-//@Script.Manifest(
-//        name = "VarrockRoof", properties = "author=LOL; client=4;",
-//        description = "Varrock")
+////@Script.Manifest(
+//       //  name = "VarrockRoof", properties = "author=LOL; client=4;",
+//      //description = "Varrock")
 public class VarrockRoof extends PollingScript<ClientContext> implements PaintListener {
     private static final Area groundFloor = new Area(new Tile(3000, 3300, 0), new Tile(3300, 3500, 0));
     private static final Tile destTile = new Tile(3221, 3414, 0);

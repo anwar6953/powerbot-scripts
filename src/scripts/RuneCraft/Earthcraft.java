@@ -11,9 +11,9 @@ import java.util.Random;
 
 //import scripts.ID;
 
-//@Script.Manifest(
-//        name = "YT_Earthcraft", properties = "author=LOL; client=4;",
-//        description = "Crafts runes")
+////@Script.Manifest(
+//       //  name = "YT_Earthcraft", properties = "author=LOL; client=4;",
+//      //description = "Crafts runes")
 public class Earthcraft extends PollingScript<ClientContext> implements PaintListener, MessageListener {
 
     private final Tile[] tilesBank = {new Tile(3212, 3425, 0), new Tile(3218, 3426, 0), new Tile(3223, 3427, 0), new Tile(3228, 3427, 0), new Tile(3233, 3428, 0), new Tile(3238, 3428, 0), new Tile(3243, 3428, 0), new Tile(3248, 3428, 0), new Tile(3253, 3426, 0), new Tile(3253, 3421, 0)};

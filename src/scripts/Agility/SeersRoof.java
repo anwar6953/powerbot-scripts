@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Script.Manifest(
-        name = "SeersRoof", properties = "author=LOL; client=4;",
-        description = "SeersRoof")
+//@Script.Manifest(
+       //  name = "SeersRoof", properties = "author=LOL; client=4;",
+      //description = "SeersRoof")
 public class SeersRoof extends PollingScript<ClientContext> implements PaintListener {
     private static final Tile destTile = new Tile(2728,3486, 0);
     public static final Tile[] path = {new Tile(2704, 3464, 0), new Tile(2709, 3463, 0), new Tile(2714, 3463, 0), new Tile(2718, 3466, 0), new Tile(2720, 3471, 0), new Tile(2724, 3476, 0), new Tile(2727, 3481, 0), new Tile(2728, 3486, 0)};

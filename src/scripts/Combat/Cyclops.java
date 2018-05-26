@@ -12,9 +12,9 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
-@Script.Manifest(
-        name = "Cyclops", properties = "author=LOL; topic=1330081; client=4;",
-        description = "Makes fires at Varrock")
+//@Script.Manifest(
+       //  name = "Cyclops", properties = "author=LOL; topic=1330081; client=4;",
+      //description = "Makes fires at Varrock")
 public class Cyclops extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private boolean looting = false;
     GroundSearch itemS = new GroundSearch();

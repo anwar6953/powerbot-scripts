@@ -14,9 +14,7 @@ import java.util.Random;
 
 //import scripts.ID;
 
-@Script.Manifest(
-        name = "YT_EdgeCraft", properties = "author=LOL; topic=1330081; client=4;",
-        description = "Craft at Edgeville Furnace")
+//@Script.Manifest(name = "YT_EdgeCraft", properties = "author=LOL; topic=1330081; client=4;",description = "Craft at Edgeville Furnace")
 public class EdgeCraft extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private static final Tile destTile = new Tile(3109, 3499);
     private static final Tile bankTile = new Tile(3096, 3494);

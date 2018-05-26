@@ -7,9 +7,9 @@ import org.powerbot.script.rt4.Item;
 
 import java.awt.*;
 
-//@Script.Manifest(
-//        name = "SpecClean", properties = "author=LOL; topic=1330081; client=4;",
-//        description = "Cleans specimens")
+////@Script.Manifest(
+//       //  name = "SpecClean", properties = "author=LOL; topic=1330081; client=4;",
+//      //description = "Cleans specimens")
 public class SpecimenClean extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private int pileID = 24559;
     private int tableID = 24556;

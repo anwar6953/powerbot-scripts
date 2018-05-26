@@ -309,7 +309,6 @@ public class StringQueueGUI {
         frame.add(jPanel1);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
     }
 
@@ -322,5 +321,14 @@ public class StringQueueGUI {
      */
     public ArrayList<String> getReturnList() {
         return returnList;
+    }
+
+    /**
+     * Gets done
+     *
+     * @return value of done
+     */
+    public boolean isDone() {
+        return done;
     }
 }

@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-@Script.Manifest(name = "MrFletcher", properties = "author=nomivore; topic=1341646; client=4;", description = "Supports darts,bolts,gem tips,logs,bows etc.")
+//@Script.Manifest(name = "MrFletcher", properties = "author=nomivore; topic=1341646; client=4;", description = "Supports darts,bolts,gem tips,logs,bows etc.")
 public class Fletcher extends PollingScript<ClientContext> implements PaintListener {
     public static long startTime;
     public static int startExp;

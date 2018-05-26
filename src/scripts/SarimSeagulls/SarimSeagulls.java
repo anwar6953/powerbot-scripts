@@ -10,7 +10,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-@Script.Manifest(name = "SarimSeagulls", properties = "author=nomivore; topic=1338000; client=4;", description = "Attacks seagulls, banks/buries bones")
+//@Script.Manifest(name = "SarimSeagulls", properties = "author=nomivore; topic=1338000; client=4;", description = "Attacks seagulls, banks/buries bones")
 public class SarimSeagulls extends PollingScript<ClientContext> implements PaintListener, MessageListener {
 
     private final int[] npcs = new int[]{123,123};

@@ -17,9 +17,9 @@ import java.util.regex.Pattern;
 import static java.lang.Thread.sleep;
 
 
-@Script.Manifest(
-        name = "AmmoniteCrabs", properties = "author=LOL; topic=1330081; client=4;",
-        description = "Kills AmmoniteCrabs")
+//@Script.Manifest(
+       //  name = "AmmoniteCrabs", properties = "author=LOL; topic=1330081; client=4;",
+      //description = "Kills AmmoniteCrabs")
 public class AmmoniteCrabs extends PollingScript<ClientContext> implements PaintListener {
 
 //    private static final Tile[] tiles = {new Tile(3185, 3436, 0), new Tile(3183, 3433, 0), new Tile(3185, 3430, 0), new Tile(3187, 3427, 0)};

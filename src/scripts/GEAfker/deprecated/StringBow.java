@@ -18,7 +18,7 @@ public class StringBow extends Task<ClientContext> {
     public StringBow(ClientContext ctx) {
         super(ctx);
         resourceID1 = ID.BOWSTRING;
-        resourceIDARRAY2 = new int[] {ID.BOW_MAGIC_LONG_U,ID.BOW_YEW_LONG_U,ID.BOW_MAPLE_LONG_U};
+        resourceIDARRAY2 = new int[] {ID.BOW_MAGIC_LONG_U, ID.BOW_YEW_LONG_U, ID.BOW_MAPLE_LONG_U};
         resourceID2 = resourceIDARRAY2[0];
         gameMsg = "You add";
         actionName = "Bows strung";

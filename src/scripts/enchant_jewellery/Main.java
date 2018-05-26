@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
-@Script.Manifest(name = "Enchant", properties = "author=nomivore;", description = "Enchant stuff")
+//@Script.Manifest(name = "Enchant", properties = "author=nomivore;", description = "Enchant stuff")
 public class Main extends PollingScript<ClientContext> implements PaintListener {
     private EnchantObj curr = Presets.RECOIL;
     private State state = State.WAIT;
@@ -80,6 +80,10 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
         }
     }
 
+    private enum State {
+        WITHDRAW, CAST, EQUIP, WAIT
+    }
+
     private boolean equippedStaff() {
         return ctx.equipment.itemAt(Equipment.Slot.MAIN_HAND).id() == curr.getSTAFF_ID();
     }
@@ -96,10 +100,6 @@ public class Main extends PollingScript<ClientContext> implements PaintListener 
         strings.clear();
         strings.add(state.toString());
         Utils.simplePaint(g,strings);
-    }
-
-    private enum State {
-        WITHDRAW, CAST, EQUIP, WAIT
     }
 
 
