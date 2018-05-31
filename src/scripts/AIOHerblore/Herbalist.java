@@ -11,7 +11,7 @@ import org.powerbot.script.rt4.Component;
 import java.awt.*;
 import java.util.ArrayList;
 
-//@Script.Manifest(name = "MrHerblore", properties = "author=nomivore; topic=1341867; client=4;", description = "Supports cleaning, unf, most potions, amulet of chemistry")
+@Script.Manifest(name = "MrHerblore", properties = "author=nomivore; topic=1341867; client=4;", description = "Supports cleaning, unf, most potions, amulet of chemistry")
 public class Herbalist extends PollingScript<ClientContext> implements PaintListener {
     public static long startTime;
     public static int startExp;

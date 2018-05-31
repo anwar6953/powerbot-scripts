@@ -23,7 +23,7 @@ public class EdgeCraft extends PollingScript<ClientContext> implements PaintList
     private FurnaceCraftGUI.craftObj currObj;
     private int furnaceID = 16469;
     private int toolID;
-    private int resourceID1 = ID.GOLD_BAR;
+    private int resourceID1 = ID.GOLD_BAR_2357;
     private int resourceID2;
     private Component ui;
     private int productDone;
