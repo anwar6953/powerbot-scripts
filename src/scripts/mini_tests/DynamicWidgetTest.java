@@ -1,4 +1,4 @@
-package scripts.widgets;
+package scripts.mini_tests;
 
 import api.ClientContext;
 import api.PollingScript;
@@ -10,7 +10,7 @@ import scripts.ID;
 import java.awt.*;
 import java.util.ArrayList;
 
-@Script.Manifest(name = "widget item", properties = "author=nomivore;", description = "Make jewellery")
+//@Script.Manifest(name = "widget item", properties = "author=nomivore;", description = "Make jewellery")
 public class DynamicWidgetTest extends PollingScript<ClientContext> implements PaintListener {
     private Component component = ctx.components.nil();
     private ArrayList<Component> components = new ArrayList<>();

@@ -212,4 +212,9 @@ public class Components extends AbstractQuery<Components, Component, ClientConte
         int[] ypoints = {rect.y, rect.y, rect.y + rect.height, rect.y + rect.height};
         return new Polygon(xpoints, ypoints, 4);
     }
+    public static Polygon RectangleToPolygon(Rectangle rect) {
+        int[] xpoints = {rect.x, rect.x + rect.width, rect.x + rect.width, rect.x};
+        int[] ypoints = {rect.y, rect.y, rect.y + rect.height, rect.y + rect.height};
+        return new Polygon(xpoints, ypoints, 4);
+    }
 }

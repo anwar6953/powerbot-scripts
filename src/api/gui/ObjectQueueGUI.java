@@ -5,10 +5,7 @@
  */
 
 package api.gui;
-
 import api.ClientContext;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
@@ -19,10 +16,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Optional;
+import java.util.LinkedList;
 import java.util.Properties;
+import java.util.stream.Collectors;
+import javax.swing.*;
 
 public class ObjectQueueGUI<T> {
     private ClientContext ctx;
@@ -31,12 +29,14 @@ public class ObjectQueueGUI<T> {
 
     private boolean done = false;
     private HashSet<T> allObjects;
+    private HashSet<String> allStrings = new HashSet<>();
 
-    private final ArrayList<T> returnList = new ArrayList<>();
+    private final LinkedList<T> returnList = new LinkedList<>();
 
     public ObjectQueueGUI(ClientContext ctx, HashSet<T> allObjects) {
         this.ctx = ctx;
         this.allObjects = allObjects;
+        this.allStrings.addAll(allObjects.stream().map(Object::toString).collect(Collectors.toList()));
         initComponents();
         addComponents();
     }
@@ -54,14 +54,14 @@ public class ObjectQueueGUI<T> {
         strings.add("Chicken");
         strings.add("Monkfish");
         strings.add("Bass");
-        ObjectQueueGUI<String> gui = new ObjectQueueGUI<>(strings);
+        ObjectQueueGUI gui = new ObjectQueueGUI<>(strings);
     }
 
     private void saveList() {
         if (ctx == null) return;
         StringBuilder builder = new StringBuilder();
-        for (T s : returnList) {
-            builder.append(s).append(",");
+        for (Object o : listModel1.toArray()) {
+            builder.append(o.toString()).append(",");
         }
         prop.setProperty("taskList",builder.toString());
         try {
@@ -87,8 +87,8 @@ public class ObjectQueueGUI<T> {
 
             if (prop.getProperty("taskList") != null) {
                 for (String s : prop.getProperty("taskList").split(",")) {
-                    Optional<T> obj = allObjects.stream().filter(t->t.toString().equals(s)).findFirst();
-                    obj.ifPresent(t->listModel1.addElement(t));
+                    listModel1.addElement(s);
+                    allStrings.add(s);
                 }
             }
             fr.close();
@@ -98,13 +98,13 @@ public class ObjectQueueGUI<T> {
     }
 
     private JFrame frame = new JFrame("Settings");
-    private JList<T> taskList = new JList<>();
-    private DefaultListModel<T> listModel1 = new DefaultListModel<>();
+    private JList<String> taskList = new JList<>();
+    private DefaultListModel<String> listModel1 = new DefaultListModel<>();
     private JButton finishButton = new JButton("Finish");
     private JButton addButton = new JButton("Add");
     private JButton clearButton = new JButton("Clear");
     private JTextField filterBox = new JTextField();
-    private JComboBox<T> filteredListBox = new JComboBox<>();
+    private JComboBox<String> filteredListBox = new JComboBox<>();
     private JPanel jPanel1 = new JPanel(new GridBagLayout());
     private GridBagConstraints c = new GridBagConstraints();
 
@@ -126,7 +126,7 @@ public class ObjectQueueGUI<T> {
             @Override
             public Transferable createTransferable(JComponent comp) {
                 index = taskList.getSelectedIndex();
-                return new StringSelection(taskList.getSelectedValue().toString());
+                return new StringSelection(taskList.getSelectedValue());
             }
 
             @Override
@@ -140,16 +140,16 @@ public class ObjectQueueGUI<T> {
             }
 
             @Override
-            public boolean canImport(TransferSupport support) {
+            public boolean canImport(TransferHandler.TransferSupport support) {
                 return support.isDataFlavorSupported(DataFlavor.stringFlavor);
             }
 
             @Override
-            public boolean importData(TransferSupport support) {
+            public boolean importData(TransferHandler.TransferSupport support) {
                 try {
-                    T task = (T) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+                    String s = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
                     JList.DropLocation dl = (JList.DropLocation) support.getDropLocation();
-                    listModel1.add(dl.getIndex(), task);
+                    listModel1.add(dl.getIndex(), s);
                     beforeIndex = dl.getIndex() < index;
                     return true;
                 } catch (UnsupportedFlavorException | IOException e) {
@@ -193,7 +193,7 @@ public class ObjectQueueGUI<T> {
         });
 
         loadList();
-        for (T s : allObjects) filteredListBox.addItem(s);
+        for (String s : allStrings) filteredListBox.addItem(s);
 
         filterBox.addKeyListener(new KeyListener() {
             @Override
@@ -205,12 +205,12 @@ public class ObjectQueueGUI<T> {
             public void keyPressed(KeyEvent e) {
                 String filterString = filterBox.getText();
                 filteredListBox.removeAllItems();
-                for (T obj : allObjects) {
-                    if (obj.toString().toLowerCase().contains(filterString.toLowerCase())
-                            || filterString.isEmpty()) filteredListBox.addItem(obj);
+                for (String s : allStrings) {
+                    if (s.toLowerCase().contains(filterString.toLowerCase())
+                            || filterString.isEmpty()) filteredListBox.addItem(s);
                 }
                 if (filteredListBox.getItemCount() == 0) {
-                    for (T t : allObjects) filteredListBox.addItem(t);
+                    for (String s : allStrings) filteredListBox.addItem(s);
                 }
             }
 
@@ -221,9 +221,9 @@ public class ObjectQueueGUI<T> {
         });
 
         addButton.addActionListener(e -> {
-            T task = (T) filteredListBox.getSelectedItem();
-            if (task == null) return;
-            listModel1.addElement(task);
+            String taskName = (String)filteredListBox.getSelectedItem();
+            if (taskName.isEmpty()) return;
+            listModel1.addElement(taskName);
         });
 
         clearButton.addActionListener(e -> {
@@ -232,8 +232,8 @@ public class ObjectQueueGUI<T> {
 
         finishButton.addActionListener(e -> {
             for (Object obj : listModel1.toArray()) {
-                T task = (T)obj;
-                returnList.add(task);
+                String s = (String)obj;
+                allObjects.stream().filter(o->o.toString().equals(s)).findFirst().ifPresent(returnList::add);
             }
             done = true;
             System.out.println("Finished");
@@ -243,15 +243,15 @@ public class ObjectQueueGUI<T> {
         });
 
         KeyboardFocusManager
-            .getCurrentKeyboardFocusManager()
-            .addKeyEventDispatcher(e -> {
-                if (e.getID() == KeyEvent.KEY_PRESSED) {
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        addButton.doClick();
+                .getCurrentKeyboardFocusManager()
+                .addKeyEventDispatcher(e -> {
+                    if (e.getID() == KeyEvent.KEY_PRESSED) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            addButton.doClick();
+                        }
                     }
-                }
-                return false;
-            });
+                    return false;
+                });
 
         WindowListener exitListener = new WindowAdapter() {
 
@@ -322,7 +322,7 @@ public class ObjectQueueGUI<T> {
      *
      * @return value of returnList
      */
-    public ArrayList<T> getReturnList() {
+    public LinkedList<T> getReturnList() {
         return returnList;
     }
 

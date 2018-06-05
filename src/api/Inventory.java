@@ -17,6 +17,22 @@ public class Inventory extends org.powerbot.script.rt4.Inventory {
         super(ctx);
     }
 
+
+    public static Polygon polygon(Item i) {
+        final Point center = i.centerPoint();
+        final int WIDTH = 42, HEIGHT = 36;
+        final Rectangle r = new Rectangle(center.x-WIDTH/2,center.y-HEIGHT/2, WIDTH, HEIGHT);
+        return Components.RectangleToPolygon(r);
+    }
+
+    public Polygon polygon(int index) {
+        final int WIDTH = 42, HEIGHT = 36;
+        final Point base = this.component().screenPoint();
+        final int x = base.x - 3 + (index % 4) * WIDTH, y = base.y - 2 + (index / 4) * HEIGHT;
+        final Rectangle r = new Rectangle(x,y, WIDTH, HEIGHT);
+        return Components.RectangleToPolygon(r);
+    }
+
     public int[] pattern() {
         Random r = new Random();
         int i;
