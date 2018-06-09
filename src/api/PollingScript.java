@@ -14,7 +14,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class PollingScript<C extends ClientContext> extends org.powerbot.script.PollingScript<ClientContext> {
     protected Utils Utils;
@@ -269,16 +272,19 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
 
         public void simplePaint(Graphics graphics, String... strings) {
             Graphics2D g = (Graphics2D) graphics;
-            int yBase=0, xBase=10, x, y, width=185, height = 0;
+            int yBase=0, xBase=10, x, y, height = 0;
             y = g.getFont().getSize()*120/100;
             x = xBase;
 
+            AtomicInteger width = new AtomicInteger(185);
             height += strings.length*g.getFont().getSize()*110/100;
+
+            Arrays.stream(strings).max(Comparator.comparingInt(String::length)).ifPresent(s->width.set(s.length()*g.getFont().getSize()*50/100));
 
             g.setColor(Color.BLACK);
             AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);
             g.setComposite(alphaComposite);
-            g.fillRect(0, 0, width, height);
+            g.fillRect(0, 0, width.get(), height);
 
             g.setColor(Color.WHITE);
             for (String s : strings) {

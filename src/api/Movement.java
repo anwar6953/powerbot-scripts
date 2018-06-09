@@ -71,6 +71,21 @@ public class Movement extends org.powerbot.script.rt4.Movement {
         return stepWait(obj,false);
     }
 
+    public boolean inchTowards(Locatable obj) {
+        final Tile curr = ctx.players.local().tile();
+        final Tile dest = obj.tile();
+        final int times = 20;
+        for (int i = 0; i < times; i++) {
+            int x = curr.x()*i/times + dest.x()*(times-i)/times;
+            int y = curr.y()*i/times + dest.y()*(times-i)/times;
+            Tile next = randomTile(1,new Tile(x,y,curr.floor()));
+            if (next.matrix(ctx).inViewport()) {
+                if (next.matrix(ctx).click()) return true;
+            }
+        }
+        return false;
+    }
+
     public Tile randomTile(int der, Tile tile) {
         Random r = new Random();
         int x = r.nextInt(1+der*2)-der;
