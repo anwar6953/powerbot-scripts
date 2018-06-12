@@ -13,7 +13,7 @@ import scripts.ID;
 import java.awt.*;
 import java.util.ArrayList;
 
-@Script.Manifest(name = "widget item", properties = "author=nomivore;", description = "Make jewellery")
+//@Script.Manifest(name = "widget item", properties = "author=nomivore;", description = "Make jewellery")
 public class ItemPolygon extends PollingScript<ClientContext> implements PaintListener {
     private Component component = ctx.components.nil();
     private Polygon p = new Polygon();

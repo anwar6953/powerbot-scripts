@@ -74,6 +74,9 @@ public class Movement extends org.powerbot.script.rt4.Movement {
     public boolean inchTowards(Locatable obj) {
         final Tile curr = ctx.players.local().tile();
         final Tile dest = obj.tile();
+        if (dest.matrix(ctx).inViewport()) {
+            dest.matrix(ctx).interact("Walk here");
+        }
         final int times = 20;
         for (int i = 0; i < times; i++) {
             int x = curr.x()*i/times + dest.x()*(times-i)/times;
