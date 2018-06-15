@@ -4,6 +4,7 @@ import org.powerbot.script.AbstractQuery;
 import org.powerbot.script.Filter;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Component;
+import org.powerbot.script.rt4.Constants;
 import org.powerbot.script.rt4.Widget;
 
 import java.awt.*;
@@ -216,5 +217,30 @@ public class Components extends AbstractQuery<Components, Component, ClientConte
         int[] xpoints = {rect.x, rect.x + rect.width, rect.x + rect.width, rect.x};
         int[] ypoints = {rect.y, rect.y, rect.y + rect.height, rect.y + rect.height};
         return new Polygon(xpoints, ypoints, 4);
+    }
+
+    public Component findCloseButton(final Widget widget) {
+        for (Component c : widget.components()) {
+            Component closeButton = findCloseButton(c);
+            if (closeButton != nil()) return closeButton;
+        }
+        return nil();
+    }
+
+    public Component findCloseButton(final Component component) {
+        if (component.componentCount() == 0) {
+            for (final int texture : Constants.CLOSE_BUTTON_TEXTURES) {
+                if (component.textureId() == texture) {
+                    return component;
+                }
+            }
+            return nil();
+        } else {
+            for (final Component c1 : component.components()) {
+                Component closeButton = findCloseButton(c1);
+                if (closeButton != nil()) return closeButton;
+            }
+        }
+        return nil();
     }
 }
