@@ -33,27 +33,22 @@ public class Movement extends org.powerbot.script.rt4.Movement {
         Tile tile = obj.tile();
         double distToLocal = tile.distanceTo(ctx.players.local());
         if (distToLocal == 0 ||
-            distToLocal > 200 ||
-            tile == org.powerbot.script.Tile.NIL) return false;
+                distToLocal > 200 ||
+                tile == org.powerbot.script.Tile.NIL) return false;
+
+        if (ctx.movement.destination().distanceTo(obj) == 0) {
+            return Condition.wait(()->
+                            ctx.movement.destination().distanceTo(ctx.players.local()) < 3 ||
+                                    ctx.movement.destination().equals(Tile.NIL)
+                    , 100, 15);
+        }
 
         if (distToLocal < 8) {
-//            if (!tile.matrix(ctx).inViewport()) ctx.camera.turnTo(obj.tile());
-            if (distToLocal > 3) ctx.camera.turnTo(obj.tile());
             if (minimap) step(obj);
-            else tile.matrix(ctx).interact("Walk here");
+            else inchTowards(obj);
         } else if (distToLocal < 15) {
             step(obj);
         } else if (distToLocal < 75) {
-//            Random r = new Random();
-//            int x = r.nextInt(2);
-//            int y = r.nextInt(2);
-//            if (r.nextBoolean()) {
-//                x = -x;
-//            }
-//            if (r.nextBoolean()) {
-//                y = -y;
-//            }
-//            step(tile.derive(x,y));
             step(randomTile(2,tile));
         }
         if (!Condition.wait(()->ctx.players.local().inMotion()
@@ -61,9 +56,9 @@ public class Movement extends org.powerbot.script.rt4.Movement {
 
         Tile dest = ctx.movement.destination();
         return Condition.wait(()->
-                !ctx.players.local().inMotion() ||
-                dest.distanceTo(ctx.players.local()) < 5 ||
-                dest.distanceTo(ctx.players.local()) > 35
+                        !ctx.players.local().inMotion() ||
+                                dest.distanceTo(ctx.players.local()) < 5 ||
+                                dest.distanceTo(ctx.players.local()) > 35
                 , 100, 15);
     }
 

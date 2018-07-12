@@ -485,6 +485,28 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
             if (r.nextBoolean()) new Thread(() -> ctx.camera.angle(r.nextInt(300) + 60)).start();
         }
 
+        public void APmouseOffScreen(int side) {
+            Condition.sleep();
+            switch (side) {
+                case 1: // To Top
+                    ctx.input.move(random(0, ctx.game.dimensions().getWidth()-1),0);
+                    break;
+                case 3: // To Bottom
+                    if (ctx.input.getLocation().y > (int) (ctx.game.dimensions().getHeight()-10)) return;
+                    ctx.input.move(random(0, ctx.game.dimensions().getWidth()-1),
+                            (int) (ctx.game.dimensions().getHeight()-1));
+                    break;
+                case 4: // To Left
+                    ctx.input.move(0,
+                            random(0, ctx.game.dimensions().getHeight()-1));
+                    break;
+                case 2: // To Right
+                    ctx.input.move((int) ctx.game.dimensions().getWidth()-1,
+                            random(0, ctx.game.dimensions().getHeight()-1));
+                    break;
+            }
+        }
+
         public void APmouseOffScreen() {
             Condition.sleep();
             switch (random(0, 3)) {
