@@ -23,6 +23,7 @@ public abstract class Task<C extends ClientContext> extends ClientAccessor<C> {
     public abstract void initialise();
     public abstract boolean activate();
     public abstract void execute();
+    public abstract void finish();
     public abstract String getStateName();
 
     @Override

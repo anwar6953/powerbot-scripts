@@ -42,6 +42,7 @@ public class Loader extends PollingScript<ClientContext> implements PaintListene
         log.info("Level " + stats.level());
         log.info("Exp " + stats.exp() + ":" + stats.expPerHour());
         log.info("Gained levels "+ stats.gainedLevels());
+        task.finish();
     }
 
     @Override

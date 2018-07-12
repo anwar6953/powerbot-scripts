@@ -50,6 +50,12 @@ public class SeagullKiller extends Task<ClientContext> implements PaintListener 
     }
 
     @Override
+    public void finish() {
+        log.info("Total banked "+looted);
+        log.info("Profit "+(looted*bonePrice) + "-"+ timer.unitPerHour(looted*bonePrice));
+    }
+
+    @Override
     public boolean activate() {
         return true;
     }
