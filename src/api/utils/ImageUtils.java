@@ -26,11 +26,29 @@ public class ImageUtils {
         return toBufferedImage(bi.getScaledInstance(width, height, BufferedImage.SCALE_SMOOTH));
     }
 
+    public static BufferedImage scaleImageHeight(int height, BufferedImage bi) {
+        double scale = (double)height/(double)bi.getHeight();
+        return scaleImage(scale,bi);
+    }
+
     public static BufferedImage scaleImage(double scale, BufferedImage bi) {
         int width = (int)(scale*bi.getWidth());
         int height = (int)(scale*bi.getHeight());
-        return toBufferedImage(bi.getScaledInstance(width, height, BufferedImage.SCALE_SMOOTH));
+        return toBufferedImage(bi.getScaledInstance(width, height, BufferedImage.SCALE_AREA_AVERAGING));
     }
+
+//    public static BufferedImage scaleImage(double scale, BufferedImage bi) {
+//        int width = (int)(scale*bi.getWidth());
+//        int height = (int)(scale*bi.getHeight());
+//        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+//        Graphics2D g = resized.createGraphics();
+//        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+//                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+//        g.drawImage(bi, 0, 0, width, height, 0, 0, bi.getWidth(),
+//                bi.getHeight(), null);
+//        g.dispose();
+//        return resized;
+//    }
 
     //https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage
     /**

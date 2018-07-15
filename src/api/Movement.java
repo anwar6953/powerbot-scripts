@@ -71,6 +71,7 @@ public class Movement extends org.powerbot.script.rt4.Movement {
         final Tile dest = obj.tile();
         if (dest.matrix(ctx).inViewport()) {
             dest.matrix(ctx).interact("Walk here");
+            return true;
         }
         final int times = 20;
         for (int i = 0; i < times; i++) {
@@ -89,7 +90,6 @@ public class Movement extends org.powerbot.script.rt4.Movement {
         int x = r.nextInt(1+der*2)-der;
         int y = r.nextInt(1+der*2)-der;
         Tile dest = tile.derive(x,y);
-        System.out.print(tile + ": new is " + dest);
         return dest;
     }
 }

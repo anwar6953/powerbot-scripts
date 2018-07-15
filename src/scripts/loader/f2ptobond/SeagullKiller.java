@@ -10,14 +10,14 @@ import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.*;
 import org.powerbot.script.rt4.Component;
 import scripts.ID;
+import scripts.loader.Profitable;
 import scripts.loader.Task;
 
 import java.awt.*;
 
-import static java.lang.Thread.sleep;
 
 
-public class SeagullKiller extends Task<ClientContext> implements PaintListener {
+public class SeagullKiller extends Task<ClientContext> implements PaintListener, Profitable {
     private Npc curr = ctx.npcs.nil();
     private GroundItem loot = ctx.groundItems.nil();
     private String mobName = "Seagull";
@@ -61,6 +61,11 @@ public class SeagullKiller extends Task<ClientContext> implements PaintListener 
     }
 
     @Override
+    public int profit() {
+        return looted*bonePrice;
+    }
+
+    @Override
     public void execute() {
         state = getState();
         switch (state) {
@@ -72,7 +77,7 @@ public class SeagullKiller extends Task<ClientContext> implements PaintListener 
                 if (ctx.depositBox.opened()) {
                     final int count = ctx.inventory.select().count();
                     ctx.depositBox.depositInventory();
-                    if (Condition.wait(() -> ctx.inventory.select().count() == 0,500,4)) {
+                    if (Condition.wait(() -> ctx.inventory.select().count() == 0,10,400)) {
                         looted+=count;
                         log.info("Total banked "+looted);
                         log.info("Profit "+(looted*bonePrice) + "-"+ timer.unitPerHour(looted*bonePrice));
@@ -97,10 +102,10 @@ public class SeagullKiller extends Task<ClientContext> implements PaintListener 
                         .name(mobName).nearest().limit(3).shuffle().poll();
                 curr.bounds(bounds);
                 Utils.stepInteract(curr);
-                if (!Condition.wait(()->ctx.players.local().interacting().valid(),10+gausInt(5),50)) break;
+                if (!Condition.wait(()->ctx.players.local().interacting().valid(),25+gausInt(25),10)) break;
                 if (r.nextInt(100) > 90) {
                     Utils.APmouseOffScreen(3);
-                    Condition.sleep(gausInt(5000)+5000);
+                    Condition.sleep(gausInt(7000)+2000);
                 }
                 Condition.wait(()->!ctx.players.local().interacting().valid(),30,200);
                 break;
@@ -114,8 +119,8 @@ public class SeagullKiller extends Task<ClientContext> implements PaintListener 
                     if (!i.valid() || !i.inViewport()) continue;
                     log.info("Looting " + i.name());
                     loot = i;
-                    i.click();
-                    Condition.wait(()->i.tile().distanceTo(ctx.players.local()) == 0,50+gausInt(10),100);
+                    Condition.wait(()->i.click() && ctx.movement.destination().distanceTo(i.tile())==0,gausInt(100)+50,gausInt(3)+2);
+                    Condition.wait(()->i.tile().distanceTo(ctx.players.local()) == 0,gausInt(50)+500,5);
                 }
                 break;
         }
@@ -131,7 +136,6 @@ public class SeagullKiller extends Task<ClientContext> implements PaintListener 
         if (seagullTile.matrix(ctx).inViewport()) g.drawPolygon(seagullTile.tile().matrix(ctx).bounds());
         if (depositTile.matrix(ctx).inViewport()) g.drawPolygon(depositTile.tile().matrix(ctx).bounds());
     }
-
 
     private enum State {
         DEPOSIT,ATTACK,WAIT,WALK,LOOT

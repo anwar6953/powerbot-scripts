@@ -33,7 +33,7 @@ public abstract class Task<C extends ClientContext> extends ClientAccessor<C> {
 
     protected int gausInt(int num) {
         int delay = Math.abs((int)(r.nextGaussian()*num*gausTimeScale()));
-        System.out.println("Delay " + num +"->"+ delay);
+//        System.out.println("Delay " + num +"->"+ delay);
         return delay;
     }
 
