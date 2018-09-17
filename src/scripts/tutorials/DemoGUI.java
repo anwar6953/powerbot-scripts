@@ -11,6 +11,7 @@ public class DemoGUI {
     private JComboBox<String> comboBox = new JComboBox<>();
     private JList<String> list = new JList<>();
     private DefaultListModel<String> listModel = new DefaultListModel<>();
+    private JScrollPane scrollPane = new JScrollPane(list);
     private JSpinner spinner = new JSpinner();
     private JCheckBox checkBox = new JCheckBox("Check this out!");
     private JButton button = new JButton("Button");
@@ -46,6 +47,7 @@ public class DemoGUI {
             System.out.println("Checkbox selected? " + checkBox.isSelected());
             System.out.println("Spinner " + spinner.getValue());
             System.out.println("Combobox " + comboBox.getSelectedItem());
+            listModel.removeAllElements();
         });
 
         //Change textfield and combobox when value changed
@@ -54,6 +56,7 @@ public class DemoGUI {
             textField.setText(s);
             comboBox.removeAllItems();
             comboBox.addItem(s);
+            listModel.addElement(s);
         });
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
@@ -85,6 +88,7 @@ public class DemoGUI {
             for (int i = 0; i < 7; i++) {
                 p.add(new JLabel("  Label " + String.valueOf(i)));
             }
+            p.add(scrollPane);
             main.add(p);
         }
         {
