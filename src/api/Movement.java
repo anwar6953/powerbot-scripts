@@ -40,7 +40,7 @@ public class Movement extends org.powerbot.script.rt4.Movement {
             return Condition.wait(()->
                             ctx.movement.destination().distanceTo(ctx.players.local()) < 3 ||
                                     ctx.movement.destination().equals(Tile.NIL)
-                    , 100, 15);
+                    , 500, 15);
         }
 
         if (distToLocal < 8) {
@@ -59,7 +59,7 @@ public class Movement extends org.powerbot.script.rt4.Movement {
                         !ctx.players.local().inMotion() ||
                                 dest.distanceTo(ctx.players.local()) < 5 ||
                                 dest.distanceTo(ctx.players.local()) > 35
-                , 100, 15);
+                , 500, 15);
     }
 
     public boolean stepWait(Locatable obj) {
@@ -70,7 +70,9 @@ public class Movement extends org.powerbot.script.rt4.Movement {
         final Tile curr = ctx.players.local().tile();
         final Tile dest = obj.tile();
         if (dest.matrix(ctx).inViewport()) {
-            dest.matrix(ctx).interact("Walk here");
+            Condition.wait(()->dest.matrix(ctx).interact("Walk here") &&
+                            ctx.movement.destination().distanceTo(dest) <= 1
+                    ,300,5);
             return true;
         }
         final int times = 20;

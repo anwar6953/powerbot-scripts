@@ -7,9 +7,9 @@ import org.powerbot.script.rt4.Item;
 
 import java.awt.*;
 
-////@Script.Manifest(
-//       //  name = "InvenDump", properties = "author=LOL; topic=1330081; client=4;",
-//      //description = "Sells inventory")
+@Script.Manifest(
+         name = "InvenDump", properties = "author=LOL; topic=1330081; client=4;",
+      description = "Sells inventory")
 public class InvenDump extends PollingScript<ClientContext> implements PaintListener, MessageListener {
     private int productDone;
     private long startTime;

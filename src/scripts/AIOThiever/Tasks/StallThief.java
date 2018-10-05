@@ -40,7 +40,7 @@ public class StallThief extends Task<ClientContext> {
                 Condition.sleep(2000);
                 break;
             case PICK:
-                stall = (stall.valid() && !stall.equals(ctx.npcs.nil())) ? stall : ctx.objects.select().name(stallName).nearest().poll();
+                stall = (stall.valid() && !stall.equals(ctx.objects.nil())) ? stall : ctx.objects.select().name(stallName).nearest().poll();
                 Utils.stepInteract(stall,"Steal-from");
                 Condition.sleep();
                 break;

@@ -16,10 +16,11 @@ import java.awt.*;
 public class DraynorFish extends Task<ClientContext> implements PaintListener, Profitable {
     private Npc curr = ctx.npcs.nil();
     private String spotName = "Fishing spot";
-    private String actionName = "Small Net";
+    private String actionName = "Net";
     private State state = State.WAIT;
     private Tile bankTile = new Tile(3092,3245,0);
-    private Tile fishTile = new Tile(3086,3230,0);
+//    private Tile fishTile = new Tile(3086,3230,0);
+    private Tile fishTile = new Tile(3242,3149,0);
     private final int[] bounds = {-24, 48, 0, 0, -44, 12};
     private int looted = 0;
     private int itemPrice = -1;
@@ -89,6 +90,7 @@ public class DraynorFish extends Task<ClientContext> implements PaintListener, P
                 curr.bounds(bounds);
 
                 if (ctx.players.local().interacting().valid() && ctx.players.local().animation() != -1) {
+                    curr = ctx.npcs.nil();
                     Condition.wait(()->!ctx.players.local().interacting().valid()
                             || ctx.chat.canContinue(),gausInt(4000)+2000,50);
                 } else {
@@ -96,6 +98,7 @@ public class DraynorFish extends Task<ClientContext> implements PaintListener, P
                     if (!Condition.wait(()->ctx.players.local().interacting().valid()
                             && (ctx.players.local().animation() != -1 || ctx.players.local().inMotion()),gausInt(200)+300,5)) break;
                     Utils.APmouseOffScreen(3);
+                    curr = ctx.npcs.nil();
                 }
                 break;
             case WAIT:
@@ -104,7 +107,7 @@ public class DraynorFish extends Task<ClientContext> implements PaintListener, P
                 ctx.movement.stepWait(fishTile);
                 break;
             case DROP:
-                ctx.inventory.shiftDrop(ID.RAW_SHRIMPS_317);
+                ctx.inventory.shiftDrop(ID.RAW_SHRIMPS_317,ID.ANCHOVIES_319);
                 break;
         }
     }
@@ -129,11 +132,11 @@ public class DraynorFish extends Task<ClientContext> implements PaintListener, P
                 return State.DROP;
             }
 
-            if (ctx.inventory.select().count() > inventoryToDeposit || ctx.inventory.select().count() == 28
-                            || !hasItems()) {
-                return State.BANK;
-            }
-            inventoryToDeposit = Math.max(gausInt(5) + 23,26);
+//            if (ctx.inventory.select().count() > inventoryToDeposit || ctx.inventory.select().count() == 28
+//                            || !hasItems()) {
+//                return State.BANK;
+//            }
+//            inventoryToDeposit = Math.max(gausInt(5) + 23,26);
 
 
             if (fishTile.distanceTo(ctx.players.local()) > 10) return State.WALK;

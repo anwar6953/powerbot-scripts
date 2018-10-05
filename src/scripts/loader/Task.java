@@ -1,6 +1,8 @@
 package scripts.loader;
 
 import api.ClientContext;
+import api.Walker;
+import api.utils.Clicker;
 import api.utils.Timer;
 import api.PollingScript;
 import org.powerbot.script.ClientAccessor;
@@ -9,6 +11,8 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 public abstract class Task<C extends ClientContext> extends ClientAccessor<C> {
+    protected Clicker clicker = new Clicker();
+    protected Walker walker = new Walker(ctx);
     protected Random r = new Random();
     protected Logger log = Logger.getLogger(getClass().getName());
     protected PollingScript.Utils Utils;

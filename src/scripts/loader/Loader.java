@@ -9,9 +9,8 @@ import org.powerbot.script.MessageEvent;
 import org.powerbot.script.MessageListener;
 import org.powerbot.script.PaintListener;
 import org.powerbot.script.Script;
-import scripts.loader.f2ptobond.DraynorFish;
-import scripts.loader.f2ptobond.Looter;
-import scripts.loader.f2ptobond.SeagullKiller;
+import scripts.loader.f2ptobond.*;
+import scripts.loader.hcim.FlaxPick;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +28,10 @@ public class Loader extends PollingScript<ClientContext> implements PaintListene
             waitTime;
     private Stats stats = new Stats(ctx);
     private ArrayList<Task> taskArrayList = new ArrayList<>(Arrays.asList(
+        new FlaxPick(ctx,Utils),
+        new RuneBuyer(ctx,Utils),
+        new ArrowBuyer(ctx,Utils),
+        new SafeSpotter(ctx,Utils),
         new Looter(ctx,Utils),
         new DraynorFish(ctx,Utils),
         new SeagullKiller(ctx,Utils)
@@ -83,6 +86,7 @@ public class Loader extends PollingScript<ClientContext> implements PaintListene
         if (task == null) return;
         myGif.draw(g,Utils.chatboxTopLeft().x,Utils.chatboxTopLeft().y);
         strings.clear();
+        strings.add(task.getClass().getSimpleName());
         strings.add(Timer.runtimeFormatted(stats.runtime()));
         strings.add(stats.skillName() + " level " + stats.level());
         strings.add("Exp " + stats.exp() + ":" + stats.expPerHour());

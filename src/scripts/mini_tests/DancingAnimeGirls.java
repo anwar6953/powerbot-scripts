@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@Script.Manifest(name = "ControllerPause", properties = "client=4;", description = "")
+//@Script.Manifest(name = "ControllerPause", properties = "client=4;", description = "")
 public class DancingAnimeGirls extends PollingScript<ClientContext> implements PaintListener {
     private ArrayList<BufferedImage> images = new ArrayList<>();
 

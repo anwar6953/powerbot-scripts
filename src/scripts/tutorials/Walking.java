@@ -8,10 +8,8 @@ import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Npc;
 import org.powerbot.script.rt4.Player;
 
-import java.util.Comparator;
-
-//@Script.Manifest(name = "ChickenKill", properties = "author=nomivore; topic=1341279; client=4;", description = "Kills chickens")
-public class ChickenKill extends PollingScript<ClientContext> {
+@Script.Manifest(name = "ChickenKill", properties = "author=nomivore; topic=1341279; client=4;", description = "Kills chickens")
+public class Walking extends PollingScript<ClientContext> {
     @Override
     public void poll() {
 //        attackChicken();

@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
@@ -292,7 +293,7 @@ public abstract class PollingScript<C extends ClientContext> extends org.powerbo
                 y += g.getFont().getSize();
             }
         }
-        public void simplePaint(Graphics graphics, ArrayList<String> strings) {
+        public void simplePaint(Graphics graphics, List<String> strings) {
             simplePaint(graphics, strings.toArray(new String[strings.size()]));
         }
 

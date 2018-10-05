@@ -41,7 +41,7 @@ public class GrandExchange extends ClientAccessor {
     public static final int		SEARCH_COMPONENT 		= 34; //search bar, text "what would you like to buy"
     public static final int		QUERY_COMPONENT 		= 39; //area which shows searched ITEMS
     public static final int		QUERY_SELECT_COMPONENT 		= 1;
-    public static final int		SEARCH_LABEL_COMPONENT 		= 32;
+    public static final int		SEARCH_LABEL_COMPONENT 		= 31;
     public static final int		HISTORY_COMPONENT 		= 3; //component on main page containing history button
     public static final int		HISTORY_SUBCOMPONENT 		= 9; // sub for hist component
     public static final int		HISTORY_WIDGET 		= 383; // history list page
@@ -389,12 +389,8 @@ public class GrandExchange extends ClientAccessor {
         if(comp.component(input).text().replaceAll("[^\\d]", "").equals(value))
             return true;
         if(!comp.visible() || !comp.component(btn).click() || !Condition.wait(
-                new Callable<Boolean>() {
-                    public Boolean call() {
-                        return ctx.widgets.component(SEARCH_WIDGET,
-                                SEARCH_LABEL_COMPONENT).visible();
-                    }
-                }, 100, 25))
+                () -> ctx.widgets.component(SEARCH_WIDGET,
+                        SEARCH_LABEL_COMPONENT).visible(), 100, 25))
             return false;
         return ctx.input.sendln(value);
     }
