@@ -9,7 +9,7 @@ import org.powerbot.script.Script;
 import java.awt.*;
 import java.util.ArrayList;
 
-@Script.Manifest(name = "MouseHover", properties = "client=4;", description = "")
+//@Script.Manifest(name = "MouseHover", properties = "client=4;", description = "")
 public class MouseHover extends PollingScript<ClientContext> implements PaintListener {
 
     @Override

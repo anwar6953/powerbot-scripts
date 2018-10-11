@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Script.Manifest(name = "MusicTest", properties = "client=4;", description = "")
+//@Script.Manifest(name = "MusicTest", properties = "client=4;", description = "")
 public class MusicTest extends PollingScript<ClientContext> implements PaintListener {
     private final String fileName = "soup.wav";
     Clip clip;
