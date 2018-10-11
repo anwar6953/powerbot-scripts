@@ -23,6 +23,7 @@ public class MusicTest extends PollingScript<ClientContext> implements PaintList
     Clip clip;
     @Override
     public void start() {
+        ctx.properties.setProperty("login.disable", "true");
         StringBuilder sb = new StringBuilder();
         sb.append("http://");
         sb.append(ctx.properties.getProperty("sdn.host"));
